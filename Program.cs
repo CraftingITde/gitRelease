@@ -9,14 +9,15 @@ namespace gitRelease
     {
         static void Main(string[] args)
         {
-            Parser.Default.ParseArguments<Options>(args)
-               .WithParsed(opts => RunOptionsAndReturnExitCode(opts));
+            Parser.Default.ParseArguments<githubOptions, giteaOptions>(args)
+               .WithParsed<githubOptions>(opts => RunOptionsAndReturnExitCode(opts));
         }
 
-        private static void RunOptionsAndReturnExitCode(Options opts)
+        private static void RunOptionsAndReturnExitCode(githubOptions opts)
         {
             Console.WriteLine("Jej!");
             Console.WriteLine(opts.Verbose);
+            Console.WriteLine(opts.Tag);
         }
     }
 }
