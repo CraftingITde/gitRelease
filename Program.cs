@@ -10,6 +10,7 @@ namespace gitRelease
         static void Main(string[] args)
         {
 
+            #region Legazy!!!!
             var legazy = false;
 
             if (args.Length > 2)
@@ -39,8 +40,10 @@ namespace gitRelease
 
             if (!legazy)
             {
+                #endregion
                 Parser.Default.ParseVerbs<GithubCommands, GiteaCommands>(args)
                    .WithParsed<BaseCommand>(opts => opts.Execute());
+                #region Legazy!!!!
             }
             else
             {
@@ -83,6 +86,7 @@ namespace gitRelease
                     command.Execute();
                 }
             }
+            #endregion
         }
     }
 }
