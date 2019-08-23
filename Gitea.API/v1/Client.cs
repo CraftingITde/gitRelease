@@ -20,6 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
+using Gitea.API.v1.Repositories;
 using Gitea.API.v1.Users;
 using Newtonsoft.Json;
 using System;
@@ -71,6 +72,13 @@ namespace Gitea.API.v1
             : this(authorizer: new BasicAuth() { Username = username, Password = password },
                    host: host, port: port, isSecure: isSecure)
         { }
+
+        public Client(string token,
+              string host = DEFAULT_HOST, int port = DEFAULT_PORT, bool isSecure = false)
+            : this(authorizer: new TokenAuth() { Token = token },
+                   host: host, port: port, isSecure: isSecure)
+        { }
+
 
         /// <summary>
         /// Initializes a new instance of that class.
@@ -138,11 +146,11 @@ namespace Gitea.API.v1
             }
 
             newClient.BaseAddress = BaseUrl;
-            
+
             // I found that if the Authentication header was not first, the API would not except the request.
             Authorizer.PrepareClient(newClient);
             newClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            
+
 
             return newClient;
         }
@@ -206,6 +214,7 @@ namespace Gitea.API.v1
         protected virtual void SetupEndpoints()
         {
             Users = new UsersEndpoint(this);
+            Releases = new ReleasesEndpoint(this);
         }
 
         /// <summary>
@@ -217,6 +226,12 @@ namespace Gitea.API.v1
         /// Gets the endpoint of users.
         /// </summary>
         public UsersEndpoint Users
+        {
+            get;
+            protected set;
+        }
+
+        public ReleasesEndpoint Releases
         {
             get;
             protected set;
