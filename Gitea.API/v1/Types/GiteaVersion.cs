@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
-namespace Gitea.API.v1
+namespace Gitea.API.v1.Types
 {
     /// <summary>
     /// Stores a Gitea version.

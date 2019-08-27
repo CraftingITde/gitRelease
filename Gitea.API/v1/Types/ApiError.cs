@@ -23,7 +23,7 @@
 using Newtonsoft.Json;
 using System.Runtime.Serialization;
 
-namespace Gitea.API.v1
+namespace Gitea.API.v1.Types
 {
     /// <summary>
     /// An API error.

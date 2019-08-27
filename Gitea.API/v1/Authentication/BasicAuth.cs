@@ -20,19 +20,44 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
+using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 
-namespace Gitea.API.v1
+namespace Gitea.API.v1.Authentication
 {
     /// <summary>
-    /// Describes an API authorizer.
+    /// An API authorizer for basic authentification.
     /// </summary>
-    public interface IAuthorizer
+    public class BasicAuth : IAuthorizer
     {
+        /// <inheritdoc />
+        public void PrepareClient(HttpClient client)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue
+                (
+                    "Basic",
+                    Convert.ToBase64String(Encoding.ASCII.GetBytes(Username + ":" + Password))
+                );
+        }
+
         /// <summary>
-        /// Prepares a HTTP client.
+        /// Gets or sets the password.
         /// </summary>
-        /// <param name="client">The client to prepare.</param>
-        void PrepareClient(HttpClient client);
+        public string Password
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets the user name.
+        /// </summary>
+        public string Username
+        {
+            get;
+            set;
+        }
     }
 }

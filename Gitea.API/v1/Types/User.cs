@@ -20,6 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
+using Gitea.API.v1.Endpoints;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,7 @@ using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Gitea.API.v1.Users
+namespace Gitea.API.v1.Types
 {
     /// <summary>
     /// An user.
@@ -209,13 +210,5 @@ namespace Gitea.API.v1.Users
             }
         }
 
-        /// <summary>
-        /// Starts updating that user.
-        /// </summary>
-        /// <returns>The updater.</returns>
-        public UserUpdater Update()
-        {
-            return new UserUpdater(this);
-        }
     }
 }

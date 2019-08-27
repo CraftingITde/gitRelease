@@ -21,43 +21,47 @@
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
 using System;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
 
-namespace Gitea.API.v1
+namespace Gitea.API.v1.Types
 {
     /// <summary>
-    /// An API authorizer for basic authentification.
+    /// An exception for an unexpected API response.
     /// </summary>
-    public class BasicAuth : IAuthorizer
+    public class UnexpectedResponseException : Exception
     {
+        /// <summary>
+        /// Initializes a new instance of that class.
+        /// </summary>
+        /// <param name="code">The HTTP response code.</param>
+        /// <param name="status">The HTTP status text.</param>
+        public UnexpectedResponseException(int? code = 500, string status = null)
+        {
+            Code = code;
+            Status = status;
+        }
+
+        /// <summary>
+        /// Gets the HTTP response code.
+        /// </summary>
+        public int? Code
+        {
+            get;
+            protected set;
+        }
+
         /// <inheritdoc />
-        public void PrepareClient(HttpClient client)
+        public override string Message
         {
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue
-                (
-                    "Basic",
-                    Convert.ToBase64String(Encoding.ASCII.GetBytes(Username + ":" + Password))
-                );
+            get { return $"Unexpected response: [{Code}] '{Status}'"; }
         }
 
         /// <summary>
-        /// Gets or sets the password.
+        /// Gets the HTTP status text.
         /// </summary>
-        public string Password
+        public string Status
         {
             get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the user name.
-        /// </summary>
-        public string Username
-        {
-            get;
-            set;
+            protected set;
         }
     }
 }

@@ -20,48 +20,41 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
-using System;
+using Newtonsoft.Json;
+using System.Runtime.Serialization;
 
-namespace Gitea.API.v1
+namespace Gitea.API.v1.Types
 {
     /// <summary>
-    /// An exception for an unexpected API response.
+    /// Permissions of a repository.
     /// </summary>
-    public class UnexpectedResponseException : Exception
+    [DataContract]
+    public class RepositoryPermissions : JsonEntityBase
     {
         /// <summary>
-        /// Initializes a new instance of that class.
+        /// admin
         /// </summary>
-        /// <param name="code">The HTTP response code.</param>
-        /// <param name="status">The HTTP status text.</param>
-        public UnexpectedResponseException(int? code = 500, string status = null)
-        {
-            Code = code;
-            Status = status;
-        }
+        [DataMember]
+        [JsonProperty("admin")]
+        public bool CanAdministrate { get; set; }
 
         /// <summary>
-        /// Gets the HTTP response code.
+        /// pull
         /// </summary>
-        public int? Code
-        {
-            get;
-            protected set;
-        }
-
-        /// <inheritdoc />
-        public override string Message
-        {
-            get { return $"Unexpected response: [{Code}] '{Status}'"; }
-        }
+        [DataMember]
+        [JsonProperty("pull")]
+        public bool CanPull { get; set; }
 
         /// <summary>
-        /// Gets the HTTP status text.
+        /// push
         /// </summary>
-        public string Status
-        {
-            get;
-            protected set;
-        }
+        [DataMember]
+        [JsonProperty("push")]
+        public bool CanPush { get; set; }
+
+        /// <summary>
+        /// Gets the underlying repository.
+        /// </summary>
+        public Repository Repository { get; internal set; }
     }
 }

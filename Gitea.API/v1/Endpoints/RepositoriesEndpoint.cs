@@ -20,7 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
-using Gitea.API.v1.Repositories;
+using Gitea.API.v1.Types;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -28,7 +28,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Gitea.API.v1.Users
+namespace Gitea.API.v1.Endpoints
 {
     /// <summary>
     /// An endpoint for an user repository.
@@ -139,18 +139,6 @@ namespace Gitea.API.v1.Users
             
         }
 
-        /// <summary>
-        /// Starts migrating an external repository.
-        /// </summary>
-        /// <returns>The builder.</returns>
-        public MigrationBuilder Migrate()
-        {
-            return new MigrationBuilder(User);
-        }
-        public RepositoryBuilder Create()
-        {
-            return new RepositoryBuilder(User);
-        }
         /// <summary>
         /// Gets the underlying user.
         /// </summary>

@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace Gitea.API.v1
+namespace Gitea.API.v1.Authentication
 {
     /// <summary>
     /// An API authorizer for Token authentification.

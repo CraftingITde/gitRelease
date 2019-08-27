@@ -20,8 +20,9 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
-using Gitea.API.v1.Repositories;
-using Gitea.API.v1.Users;
+using Gitea.API.v1.Endpoints;
+using Gitea.API.v1.Types;
+using Gitea.API.v1.Authentication;
 using Newtonsoft.Json;
 using System;
 using System.Net;

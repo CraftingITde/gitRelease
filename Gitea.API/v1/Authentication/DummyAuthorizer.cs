@@ -20,41 +20,17 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
-using Newtonsoft.Json;
-using System.Runtime.Serialization;
+using System.Net.Http;
 
-namespace Gitea.API.v1.Repositories
+namespace Gitea.API.v1.Authentication
 {
     /// <summary>
-    /// Permissions of a repository.
+    /// An authorizer that does nothing.
     /// </summary>
-    [DataContract]
-    public class RepositoryPermissions : JsonEntityBase
+    public class DummyAuthorizer : IAuthorizer
     {
-        /// <summary>
-        /// admin
-        /// </summary>
-        [DataMember]
-        [JsonProperty("admin")]
-        public bool CanAdministrate { get; set; }
-
-        /// <summary>
-        /// pull
-        /// </summary>
-        [DataMember]
-        [JsonProperty("pull")]
-        public bool CanPull { get; set; }
-
-        /// <summary>
-        /// push
-        /// </summary>
-        [DataMember]
-        [JsonProperty("push")]
-        public bool CanPush { get; set; }
-
-        /// <summary>
-        /// Gets the underlying repository.
-        /// </summary>
-        public Repository Repository { get; internal set; }
+        /// <inheritdoc />
+        public void PrepareClient(HttpClient client)
+        { }
     }
 }

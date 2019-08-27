@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Gitea.API.v1.Repositories
+namespace Gitea.API.v1.Types
 {
     public class Release
     {

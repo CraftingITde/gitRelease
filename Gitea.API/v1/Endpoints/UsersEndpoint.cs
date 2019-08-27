@@ -20,6 +20,7 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
+using Gitea.API.v1.Types;
 using Newtonsoft.Json;
 using System;
 using System.Net;
@@ -27,7 +28,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Gitea.API.v1.Users
+namespace Gitea.API.v1.Endpoints
 {
     /// <summary>
     /// An endpoint of users.
@@ -118,15 +119,6 @@ namespace Gitea.API.v1.Users
 
                 return await CreateUserObject(resp);
             }
-        }
-
-        /// <summary>
-        /// Starts creating a new user.
-        /// </summary>
-        /// <returns>The builder.</returns>
-        public UserBuilder New()
-        {
-            return new UserBuilder(this);
         }
 
         /// <summary>

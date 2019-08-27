@@ -22,15 +22,17 @@
 
 using System.Net.Http;
 
-namespace Gitea.API.v1
+namespace Gitea.API.v1.Authentication
 {
     /// <summary>
-    /// An authorizer that does nothing.
+    /// Describes an API authorizer.
     /// </summary>
-    public class DummyAuthorizer : IAuthorizer
+    public interface IAuthorizer
     {
-        /// <inheritdoc />
-        public void PrepareClient(HttpClient client)
-        { }
+        /// <summary>
+        /// Prepares a HTTP client.
+        /// </summary>
+        /// <param name="client">The client to prepare.</param>
+        void PrepareClient(HttpClient client);
     }
 }

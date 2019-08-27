@@ -22,7 +22,7 @@
 
 using System;
 
-namespace Gitea.API.v1
+namespace Gitea.API.v1.Types
 {
     /// <summary>
     /// An API exception.

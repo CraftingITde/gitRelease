@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Gitea.API.v1.Repositories
+namespace Gitea.API.v1.Endpoints
 {
     public class ReleasesEndpoint : EndpointBase
     {
