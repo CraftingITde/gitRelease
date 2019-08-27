@@ -33,9 +33,9 @@ namespace Gitea.API.v1.Endpoints
     /// <summary>
     /// An endpoint for an user repository.
     /// </summary>
-    public class RepositoriesEndpoint
+    public class UserRepositoriesEndpoint
     {
-        internal RepositoriesEndpoint(User user)
+        internal UserRepositoriesEndpoint(User user)
         {
             User = user;
         }

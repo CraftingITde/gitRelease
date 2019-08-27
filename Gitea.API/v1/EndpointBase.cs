@@ -20,6 +20,12 @@
 // LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 // FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 
+using Gitea.API.v1.Types;
+using Newtonsoft.Json;
+using System;
+using System.Net;
+using System.Threading.Tasks;
+
 namespace Gitea.API.v1
 {
     /// <summary>
@@ -40,5 +46,36 @@ namespace Gitea.API.v1
             get;
             internal set;
         }
+
+        protected static async Task CheckResponse(System.Net.Http.HttpResponseMessage resp)
+        {
+            Exception exception = null;
+
+            if (resp.StatusCode != HttpStatusCode.OK && resp.StatusCode != HttpStatusCode.Created)
+            {
+                switch (resp.StatusCode)
+                {
+                    case HttpStatusCode.InternalServerError:
+                        exception = new ApiException(JsonConvert.DeserializeObject<ApiError>
+                            (
+                                await resp.Content.ReadAsStringAsync()
+                            ),
+                            (int)resp.StatusCode, resp.ReasonPhrase);
+                        break;
+
+                    default:
+                        exception = new UnexpectedResponseException((int)resp.StatusCode,
+                                                                    resp.ReasonPhrase);
+
+                        break;
+                }
+
+                if (exception != null)
+                {
+                    throw exception;
+                }
+            }
+        }
+
     }
 }

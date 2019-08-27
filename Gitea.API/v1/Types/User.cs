@@ -42,7 +42,7 @@ namespace Gitea.API.v1.Types
         /// </summary>
         public User()
         {
-            Repositories = new RepositoriesEndpoint(this);
+            Repositories = new UserRepositoriesEndpoint(this);
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace Gitea.API.v1.Types
         /// <summary>
         /// Gets the underlying endpoint of repositories of that user.
         /// </summary>
-        public RepositoriesEndpoint Repositories { get; internal protected set; }
+        public UserRepositoriesEndpoint Repositories { get; internal protected set; }
 
         /// <summary>
         /// username

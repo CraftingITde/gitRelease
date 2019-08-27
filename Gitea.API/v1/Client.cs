@@ -215,7 +215,7 @@ namespace Gitea.API.v1
         protected virtual void SetupEndpoints()
         {
             Users = new UsersEndpoint(this);
-            Releases = new ReleasesEndpoint(this);
+            Repository = new RepositoryEndpoint(this);
         }
 
         /// <summary>
@@ -232,7 +232,7 @@ namespace Gitea.API.v1
             protected set;
         }
 
-        public ReleasesEndpoint Releases
+        public RepositoryEndpoint Repository
         {
             get;
             protected set;
