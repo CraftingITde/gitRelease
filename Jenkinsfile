@@ -31,12 +31,10 @@ pipeline {
         }
         stage('Release') {
             when { buildingTag() }
-                steps {
-                    echo env.TAG_NAME
-                }
+            steps {
+                echo env.TAG_NAME
             }
         }
-
     }
     post {
         always {
