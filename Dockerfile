@@ -13,4 +13,4 @@ FROM alpine:3.10.3
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-ENTRYPOINT ["./gitrelease"]
+ENTRYPOINT ["./gitRelease"]
