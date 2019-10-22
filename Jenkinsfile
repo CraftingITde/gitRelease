@@ -6,8 +6,10 @@ pipeline {
 	}
     stages{
         stage('Build') {
-            script {
-                def app = docker.build("craftingit/gitrelease")
+            steps {
+                script {
+                    def app = docker.build("craftingit/gitrelease")
+                }
             }
         }
         stage('Release') {
