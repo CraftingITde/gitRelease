@@ -6,11 +6,11 @@ COPY . ./
 RUN dotnet restore
 
 # Jetzt Bauen
-RUN dotnet publish gitRelease.csproj -c Release -o out
+RUN dotnet publish gitRelease.csproj -c Release -o out --self-contained true /p:PublishTrimmed=true
 
 # Und Final
-FROM mcr.microsoft.com/dotnet/core/runtime:3.0-alpine
+FROM alpine:3.10.3
 WORKDIR /app
 COPY --from=build-env /app/out .
 
-ENTRYPOINT ["dotnet", "gitrelease.dll"]
+ENTRYPOINT ["./gitrelease"]
