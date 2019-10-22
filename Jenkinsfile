@@ -2,46 +2,28 @@
 
 pipeline {
 	agent {
-		label 'DOTNET'
+		label 'DOCKER'
 	}
-
-	stages{
-        stage('Dependencys') {
-            steps {
-				script {
-                    if (isUnix()){
-                        sh 'dotnet restore'
-                    } else {
-                        bat 'dotnet restore'
-                    }
+    node {
+        def app
+        stages{
+            stage('Build') {
+                app = docker.build("craftingit/gitrelease")
+            }
+            stage('Release') {
+                when { buildingTag() }
+                steps {
+                    echo env.TAG_NAME
                 }
             }
         }
-		stage('Build') {
-            steps {
-				script {
-                    if (isUnix()){
-                        sh 'dotnet build'
-                    } else {
-                        bat 'dotnet build'
-                    }
-					parsingHelper.parseTodosAll()
-           		}
-			}
+        post {
+            always {
+                step ([$class: 'WsCleanup'])
+                script { 
+                    mailHelper.notifyEmail()
+                }
+            } 
         }
-        stage('Release') {
-            when { buildingTag() }
-            steps {
-                echo env.TAG_NAME
-            }
-        }
-    }
-    post {
-        always {
-            step ([$class: 'WsCleanup'])
-            script { 
-                 mailHelper.notifyEmail()
-            }
-        } 
     }
 }
