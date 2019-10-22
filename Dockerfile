@@ -2,12 +2,9 @@ FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine AS build-env
 WORKDIR /app
 
 # Alle Pakete wiederherstellen
-COPY *.csproj ./
-COPY /Gitea.API/*.csproj ./
+COPY . ./
 RUN dotnet restore
 
-
-COPY . ./
 # Jetzt Bauen
 RUN dotnet publish -c Release -o out
 
