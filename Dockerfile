@@ -6,7 +6,7 @@ COPY . ./
 RUN dotnet restore
 
 # Jetzt Bauen
-RUN dotnet publish -c Release -o out
+RUN dotnet publish gitRelease -c Release -o out
 
 # Und Final
 FROM microsoft/dotnet:3.0-runtime-deps-stretch-slim
