@@ -9,7 +9,7 @@ RUN dotnet restore
 RUN dotnet publish gitRelease.csproj -c Release -o out
 
 # Und Final
-FROM microsoft/dotnet:3.0-runtime-deps-stretch-slim
+FROM mcr.microsoft.com/dotnet/core/runtime:3.0-alpine
 WORKDIR /app
 COPY --from=build-env /app/out .
 
