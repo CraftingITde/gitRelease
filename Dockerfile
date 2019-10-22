@@ -6,11 +6,10 @@ COPY . ./
 RUN dotnet restore
 
 # Jetzt Bauen
-RUN dotnet publish gitRelease.csproj -c Release -o out -r linux-x64 --self-contained true /p:PublishTrimmed=true
-RUN chmod +x gitRelease
+RUN dotnet publish gitRelease.csproj -c Release -o out -r linux-musl-x64 --self-contained true /p:PublishTrimmed=true
 
 # Und Final
-FROM mcr.microsoft.com/dotnet/core/runtime:3.0-alpine
+FROM alpine:3.10.3
 WORKDIR /app
 COPY --from=build-env /app/out .
 
