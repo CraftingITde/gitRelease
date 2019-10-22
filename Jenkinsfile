@@ -4,10 +4,11 @@ pipeline {
 	agent {
 		label 'DOCKER'
 	}
-    def app
     stages{
         stage('Build') {
-            app = docker.build("craftingit/gitrelease")
+            script {
+                def app = docker.build("craftingit/gitrelease")
+            }
         }
         stage('Release') {
             when { buildingTag() }
