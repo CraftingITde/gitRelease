@@ -110,7 +110,7 @@ namespace Gitea.API.v1.Endpoints
                 string request = "repos/" + HttpUtility.UrlEncode(Owner) + "/" + HttpUtility.UrlEncode(Name) + "/releases/" + HttpUtility.UrlEncode(release.Id.ToString());
 
                 Console.WriteLine("updateReleaseAsync Request: " + request);
-                var resp = await rest.PostAsync(request, httpContent);
+                var resp = await rest.PatchAsync(request, httpContent);
 
                 await CheckResponse(resp);
                 Console.WriteLine("updateReleaseAsync after Post: it's done !!!");
