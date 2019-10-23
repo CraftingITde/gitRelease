@@ -7,7 +7,7 @@ namespace gitRelease.Commands
 {
     [Verb("gitea", HelpText = "Record changes to the repository.")]
 
-    [ChildVerbs(typeof(Update), typeof(Upload), typeof(GetTagType))]
+    [ChildVerbs(typeof(Update), typeof(Upload), typeof(IsDraft), typeof(IsPrerelease))]
     class GiteaCommands : BaseGitCommands
     {
 
@@ -44,7 +44,7 @@ namespace gitRelease.Commands
             [Option('n', "Name", Required = false, HelpText = "The name vor the Release")]
             public string Name { get; set; }
 
-            [Option('p', "Prerelease", Required = false, HelpText = "Prerelease?")]
+            [Option("Prerelease", Required = false, HelpText = "Prerelease?")]
             public bool Prerelease { get; set; }
 
             [Option('d', "Draft", Required = false, HelpText = "Draftrelease?")]
@@ -61,8 +61,8 @@ namespace gitRelease.Commands
 
             }
         }
-        [Verb("getTagType", HelpText = "give the Type of the Tag")]
-        public class GetTagType : GiteaCommands
+        [Verb("isDraft", HelpText = "is the release a draft?")]
+        public class IsDraft : GiteaCommands
         {
 
             public override void Execute()
@@ -71,9 +71,21 @@ namespace gitRelease.Commands
                 var client = new Gitea.API.v1.Client(Token, Server, Port, !Http);
                 var list = client.Repository.Release.Get(Owner, Repo);
                 var release = list.Find(r => r.Tag_name == this.Tag);
-                Console.WriteLine((release.Draft ? "Draftrelease" : "") + (release.Prerelease ? "Prerelease" : "") + (!release.Prerelease && !release.Draft ? "normalrelease" : ""));
+                Console.WriteLine(release.Draft ? "1" : "0");
+            }
+        }
+        [Verb("isPrerelease", HelpText = "is the release a Prerelease?")]
+        public class IsPrerelease : GiteaCommands
+        {
 
+            public override void Execute()
+            {
 
+                var client = new Gitea.API.v1.Client(Token, Server, Port, !Http);
+                var list = client.Repository.Release.Get(Owner, Repo);
+                var release = list.Find(r => r.Tag_name == this.Tag);
+                
+                Console.WriteLine(release.Prerelease ? "1" : "0");
             }
         }
 

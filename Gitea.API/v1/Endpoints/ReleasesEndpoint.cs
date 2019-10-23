@@ -61,11 +61,6 @@ namespace Gitea.API.v1.Endpoints
 
             using (var rest = Client.CreateBaseClient())
             {
-                Console.WriteLine("GetAsync base Adress : " + rest.BaseAddress);
-                Console.WriteLine("GetAsync Name : " + name);
-                Console.WriteLine("GetAsync owner : " + owner);
-
-
                 string request = "repos/" + HttpUtility.UrlEncode(owner) + "/" + HttpUtility.UrlEncode(name) + "/releases";
 
                 var resp = await rest.GetAsync(request);
@@ -93,7 +88,6 @@ namespace Gitea.API.v1.Endpoints
         public async Task updateReleaseAsync(string Owner, string Name, string TagName, string Body, string NewName = null, bool Prerelease = false, bool Draftrelease = false)
         {
             var release = this.Get(Owner, Name).Find(r => r.Tag_name == TagName);
-            Console.WriteLine("updateReleaseAsync release ID: " + release.Id.ToString());
             using (var rest = Client.CreateBaseClient())
             {
                 Release release1 = new Release();
@@ -104,16 +98,15 @@ namespace Gitea.API.v1.Endpoints
                 release1.Tag_name = TagName;
 
                 var json = JsonConvert.SerializeObject(release1);
-                Console.WriteLine("updatereleasesAsync json: " + json);
 
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                 string request = "repos/" + HttpUtility.UrlEncode(Owner) + "/" + HttpUtility.UrlEncode(Name) + "/releases/" + HttpUtility.UrlEncode(release.Id.ToString());
 
-                Console.WriteLine("updateReleaseAsync Request: " + request);
+
                 var resp = await rest.PatchAsync(request, httpContent);
 
                 await CheckResponse(resp);
-                Console.WriteLine("updateReleaseAsync after Post: it's done !!!");
+
             }
         }
     }
