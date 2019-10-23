@@ -1,0 +1,12 @@
+version: 1
+
+update_configs:
+  - package_manager: "docker"
+    directory: "/"
+    update_schedule: "weekly"
+  - package_manager: "dotnet:nuget"
+    directory: "/"
+    update_schedule: "weekly"
+  - package_manager: "dotnet:nuget"
+    directory: "/Gitea.API/"
+    update_schedule: "weekly"
