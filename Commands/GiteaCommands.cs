@@ -5,7 +5,7 @@ using System.Text;
 
 namespace gitRelease.Commands
 {
-    [Verb("gittea", HelpText = "Record changes to the repository.")]
+    [Verb("gitea", HelpText = "Record changes to the repository.")]
 
     [ChildVerbs(typeof(Update), typeof(Upload), typeof(GetTagType))]
     class GiteaCommands : BaseGitCommands

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Gitea.API.v1.Types;
 using System.Globalization;
-using System.IO; 
+using System.IO;
 using System.Net.Http.Headers;
 
 namespace Gitea.API.v1.Endpoints
@@ -39,7 +39,7 @@ namespace Gitea.API.v1.Endpoints
                 var imageContent = new ByteArrayContent(archiveContents);
 
 
-                requestContent.Add( imageContent, "attachment", filename);
+                requestContent.Add(imageContent, "attachment", filename);
 
                 var resp = await rest.PostAsync("repos/" + HttpUtility.UrlEncode(owner) + "/" + HttpUtility.UrlEncode(name) + "/releases/" + HttpUtility.UrlEncode(release.Id.ToString()) + "/assets", requestContent);
 
@@ -61,17 +61,17 @@ namespace Gitea.API.v1.Endpoints
 
             using (var rest = Client.CreateBaseClient())
             {
-                Console.WriteLine("GetAsync base Adress : "+  rest.BaseAddress);
-                Console.WriteLine("GetAsync Name : " + name);                  
-                Console.WriteLine("GetAsync owner : " + owner);                  
+                Console.WriteLine("GetAsync base Adress : " + rest.BaseAddress);
+                Console.WriteLine("GetAsync Name : " + name);
+                Console.WriteLine("GetAsync owner : " + owner);
 
 
                 string request = "repos/" + HttpUtility.UrlEncode(owner) + "/" + HttpUtility.UrlEncode(name) + "/releases";
-                 
+
                 var resp = await rest.GetAsync(request);
                 await CheckResponse(resp);
 
-                var json = await resp.Content.ReadAsStringAsync();                 
+                var json = await resp.Content.ReadAsStringAsync();
                 var repo = JsonConvert.DeserializeObject<List<Release>>
                     (
                        json
@@ -85,16 +85,14 @@ namespace Gitea.API.v1.Endpoints
 
         public void updateRelease(string owner, string repo, string TagName, string Body, string NewName = null, bool Prerelease = false, bool Draftrelease = false)
         {
-
-            Console.WriteLine("IchwarHier"); 
-            var job = updateReleaseAsync(owner, repo, TagName, Body, NewName, Prerelease, Draftrelease );
+            var job = updateReleaseAsync(owner, repo, TagName, Body, NewName, Prerelease, Draftrelease);
             job.Wait();
 
         }
 
-        public async Task updateReleaseAsync (string Owner, string Name,  string TagName, string Body, string NewName = null, bool Prerelease = false, bool Draftrelease = false)
+        public async Task updateReleaseAsync(string Owner, string Name, string TagName, string Body, string NewName = null, bool Prerelease = false, bool Draftrelease = false)
         {
-            var release = this.Get(Owner, Name).Find(r => r.Tag_name == TagName);             
+            var release = this.Get(Owner, Name).Find(r => r.Tag_name == TagName);
             Console.WriteLine("updateReleaseAsync release ID: " + release.Id.ToString());
             using (var rest = Client.CreateBaseClient())
             {
@@ -111,17 +109,12 @@ namespace Gitea.API.v1.Endpoints
                 var httpContent = new StringContent(json, Encoding.UTF8, "application/json");
                 string request = "repos/" + HttpUtility.UrlEncode(Owner) + "/" + HttpUtility.UrlEncode(Name) + "/releases/" + HttpUtility.UrlEncode(release.Id.ToString());
 
-                Console.WriteLine("updateReleaseAsync Request: " + request);                
-                var resp = await rest.PostAsync(request, httpContent);            
-                 
+                Console.WriteLine("updateReleaseAsync Request: " + request);
+                var resp = await rest.PostAsync(request, httpContent);
+
                 await CheckResponse(resp);
                 Console.WriteLine("updateReleaseAsync after Post: it's done !!!");
             }
         }
-
-            
-
-                
-
     }
 }
