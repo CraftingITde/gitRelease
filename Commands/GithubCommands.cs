@@ -1,5 +1,6 @@
 ﻿using CommandLine;
 using gitRelease.Types;
+using Octokit;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,11 +8,12 @@ using System.Text;
 namespace gitRelease.Commands
 {
     [Verb("github", HelpText = "Add file contents to the index.")]
-    [ChildVerbs(typeof(Create), typeof(Update), typeof(Upload), typeof(UpdateBody))]
+    [ChildVerbs(typeof(Create), typeof(Update), typeof(Upload), typeof(UpdateBody) , typeof(IsDraft), typeof(IsPrerelease))]
     public class GithubCommands : BaseGitCommands
     {
         [Verb("create", HelpText = "Creates a new Release")]
-        public class Create : GithubCommands {
+        public class Create : GithubCommands
+        {
 
             [Option('n', "Name", Required = false, HelpText = "The name vor the Release")]
             public string Name { get; set; }
@@ -23,19 +25,20 @@ namespace gitRelease.Commands
             public bool DraftRelease { get; set; }
 
 
-            [Option('b',"Body", Required = true, HelpText = "The Release Body")]
+            [Option('b', "Body", Required = true, HelpText = "The Release Body")]
             public string Body { get; set; }
 
             public override void Execute()
             {
                 var github = new GithubApi(Token, Owner, Repo);
 
-                github.createRelease(Tag, Body, Name, Prerelease, DraftRelease);
+                github.CreateRelease(Tag, Body, Name, Prerelease, DraftRelease);
             }
 
         }
         [Verb("update", HelpText = "Updates a present Release")]
-        public class Update : GithubCommands {
+        public class Update : GithubCommands
+        {
 
             [Option('n', "Name", Required = false, HelpText = "The name vor the Release")]
             public string Name { get; set; }
@@ -53,7 +56,7 @@ namespace gitRelease.Commands
             {
                 var github = new GithubApi(Token, Owner, Repo);
 
-                github.updateRelease(Tag, Body, Name, Prerelease, DraftRelease);
+                github.UpdateRelease(Tag, Body, Name, Prerelease, DraftRelease);
             }
         }
 
@@ -71,13 +74,14 @@ namespace gitRelease.Commands
             {
                 var github = new GithubApi(Token, Owner, Repo);
 
-                github.updateReleaseBody(Tag, Lines, Body);
+                github.UpdateReleaseBody(Tag, Lines, Body);
             }
         }
 
 
         [Verb("upload", HelpText = "Upload a asset")]
-        public class Upload : GithubCommands {
+        public class Upload : GithubCommands
+        {
 
             [Option("filename", Required = false, HelpText = "File to Upload")]
             public string FileName { get; set; }
@@ -87,7 +91,33 @@ namespace gitRelease.Commands
 
                 var github = new GithubApi(Token, Owner, Repo);
 
-                github.uploadAsset(Tag, FileName);
+                github.UploadAsset(Tag, FileName);
+            }
+        }
+
+        [Verb("isDraft", HelpText = "is the release a draft?")]
+        public class IsDraft : GithubCommands
+        {
+
+            public override void Execute()
+            {
+                var github = new GithubApi(Token, Owner, Repo);
+
+
+                Release release = github.GetRelease(Tag); ;
+
+                Console.WriteLine(release.Draft ? "1" : "0"); 
+
+            }
+        }
+        [Verb("isPrerelease", HelpText = "is the release a Prerelease?")]
+        public class IsPrerelease : GithubCommands
+        {
+            public override void Execute()
+            {
+                var github = new GithubApi(Token, Owner, Repo);
+                Release release = github.GetRelease(Tag); ;
+                Console.WriteLine(release.Prerelease ? "1" : "0");
             }
         }
     }
