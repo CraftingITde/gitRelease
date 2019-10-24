@@ -2,7 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace gitRelease.Types
 {
@@ -23,7 +25,7 @@ namespace gitRelease.Types
         }
 
 
-        public void getReleases()
+        public void GetReleases()
         {
             var task = client.Repository.Release.GetAll(owner, repo);
             task.Wait();
@@ -35,7 +37,7 @@ namespace gitRelease.Types
                 latest.Name);
         }
 
-        public void createRelease(string TagName, string Body, string Name = null, bool Prerelease = false, bool Draftrelease = false)
+        public void CreateRelease(string TagName, string Body, string Name = null, bool Prerelease = false, bool Draftrelease = false)
         {
             try
             {
@@ -56,7 +58,7 @@ namespace gitRelease.Types
 
         }
 
-        public void updateRelease(string TagName, string Body, string Name = null, bool Prerelease = false, bool Draftrelease = false)
+        public void UpdateRelease(string TagName, string Body, string Name = null, bool Prerelease = false, bool Draftrelease = false)
         {
             try
             {
@@ -81,7 +83,7 @@ namespace gitRelease.Types
         }
 
 
-        public void updateReleaseBody(string TagName, string lines, string Body = null)
+        public void UpdateReleaseBody(string TagName, string lines, string Body = null)
         {
             try
             {
@@ -111,7 +113,7 @@ namespace gitRelease.Types
 
 
 
-        public void uploadAsset(string TagName, string FileName)
+        public void UploadAsset(string TagName, string FileName)
         {
             try
             {
@@ -134,6 +136,16 @@ namespace gitRelease.Types
                 Console.WriteLine("Error uploading Asset");
                 Environment.Exit(-1);
             }
+        }
+
+        public Release GetRelease(string TagName)
+        {
+            Task<IReadOnlyList<Release>> releases = client.Repository.Release.GetAll(owner, repo);
+            releases.Wait();
+
+            Release release1 = releases.Result.Where(x => x.TagName == TagName).FirstOrDefault();
+
+            return release1;
         }
 
     }
