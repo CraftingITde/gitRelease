@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <PackageReference Include="Octokit" Version="0.36.0" />
-    <PackageReference Include="CommandLineParser" Version="2.6.0" />
+    <PackageReference Include="CommandLineParser" Version="2.7.82" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="CommandLineParser.2.6.0\.signature.p7s" />
