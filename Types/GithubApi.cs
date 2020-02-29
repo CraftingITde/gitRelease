@@ -121,7 +121,7 @@ namespace gitRelease.Types
                 {
                     var assetUpload = new ReleaseAssetUpload()
                     {
-                        FileName = FileName,
+                        FileName = Path.GetFileName(FileName),
                         RawData = archiveContents,
                         ContentType = "application/octet-stream"
                     };
