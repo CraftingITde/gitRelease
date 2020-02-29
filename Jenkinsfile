@@ -42,9 +42,9 @@ pipeline {
                             }
                         }
 
-                        zip zipFile: 'win-x64_gitRelease.zip', archive: false, dir: './outWin/gitRelease.exe'
-                        zip zipFile: 'linux-x64_gitRelease.zip', archive: false, dir: './outLin/gitRelease.exe'
-                        zip zipFile: 'osx-x64_gitRelease.zip', archive: false, dir: './outOsx/gitRelease.exe'
+                        zip zipFile: 'win-x64_gitRelease.zip', archive: false, dir: './outWin/'
+                        zip zipFile: 'linux-x64_gitRelease.zip', archive: false, dir: './outLin/'
+                        zip zipFile: 'osx-x64_gitRelease.zip', archive: false, dir: './outOsx/'
 
                         //Hochladen
                         withCredentials([string(credentialsId: '66cf66bd-888b-489e-8fd8-10026e30e1e6', variable: 'TOKEN')]) {         
