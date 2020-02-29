@@ -133,9 +133,9 @@ namespace gitRelease.Types
                     asset.Wait();
                 }
             }
-            catch
+            catch (Exception e)
             {
-                Console.WriteLine("Error uploading Asset");
+                Console.WriteLine("Error uploading Asset: " + e.ToString());
                 Environment.Exit(-1);
             }
         }
