@@ -5,10 +5,10 @@ gitRelease ist ein .net Core Consolen Program, welches verwendet werden kann um 
 ## Usage
 
 ### Github
- ![](.img/github.png)
+ ![](https://raw.githubusercontent.com/kstruessmann/gitRelease/master/.img/github.png?token=AFMR4VGTMER74BP6PDBV5L26MQJR4)
 
 ### Gitea
- ![](.img/gitea.png)
+ ![](https://raw.githubusercontent.com/kstruessmann/gitRelease/master/.img/gitea.png?token=AFMR4VAVWNUSGAHBI43OSPK6MQJTO)
 
 ## CLI Download 
 
