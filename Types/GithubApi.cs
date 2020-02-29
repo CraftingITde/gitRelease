@@ -119,9 +119,11 @@ namespace gitRelease.Types
             {
                 using (var archiveContents = File.OpenRead(FileName))
                 {
+                    var file = Path.GetFileName(FileName);
+                    if (file == null || file == "") { file = FileName; };
                     var assetUpload = new ReleaseAssetUpload()
                     {
-                        FileName = FileName,
+                        FileName = file,
                         RawData = archiveContents,
                         ContentType = "application/octet-stream"
                     };
@@ -131,7 +133,7 @@ namespace gitRelease.Types
                     asset.Wait();
                 }
             }
-            catch
+            catch 
             {
                 Console.WriteLine("Error uploading Asset");
                 Environment.Exit(-1);

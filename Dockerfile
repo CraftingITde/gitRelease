@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.0-alpine AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build-env
 WORKDIR /app
 
 # Alle Pakete wiederherstellen
@@ -9,7 +9,7 @@ RUN dotnet restore
 RUN dotnet publish gitRelease.csproj -c Release -o out -r linux-musl-x64 --self-contained true /p:PublishTrimmed=true
 
 # Und Final
-FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.0-alpine
+FROM mcr.microsoft.com/dotnet/core/runtime-deps:3.1-alpine
 WORKDIR /app
 COPY --from=build-env /app/out .
 
