@@ -7,6 +7,9 @@
     <ToolCommandName>gitRelease</ToolCommandName>
     <PackAsTool>true</PackAsTool>
     <PackageOutputPath>./nupkg</PackageOutputPath>
+    <Owners>CraftingIT</Owners>
+    <PackageProjectUrl>https://hub.docker.com/r/craftingit/gitrelease</PackageProjectUrl>
+    <Title>gitRelease</Title>
   </PropertyGroup>
 
   <ItemGroup>
