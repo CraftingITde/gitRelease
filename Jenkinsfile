@@ -32,13 +32,13 @@ pipeline {
                         //Bauen
                         script {
                             if (isUnix()){
-                                sh 'dotnet publish -o outWin -r win-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=$TAG_NAME -p:AssemblyVersion=$TAG_NAME $PROJECT_NAME.csproj'
-                                sh 'dotnet publish -o outLin -r linux-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=$TAG_NAME -p:AssemblyVersion=$TAG_NAME $PROJECT_NAME.csproj'
-                                sh 'dotnet publish -o outOsx -r osx-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=$TAG_NAME -p:AssemblyVersion=$TAG_NAME $PROJECT_NAME.csproj'
+                                sh 'dotnet publish -o outWin -r win-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=$TAG_NAME -p:AssemblyVersion=$TAG_NAME /p:DebugType=None $PROJECT_NAME.csproj'
+                                sh 'dotnet publish -o outLin -r linux-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=$TAG_NAME -p:AssemblyVersion=$TAG_NAME /p:DebugType=None $PROJECT_NAME.csproj'
+                                sh 'dotnet publish -o outOsx -r osx-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=$TAG_NAME -p:AssemblyVersion=$TAG_NAME /p:DebugType=None $PROJECT_NAME.csproj'
                             } else {
-                                bat 'dotnet publish -o outWin -r win-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=%TAG_NAME% -p:AssemblyVersion=%TAG_NAME% %PROJECT_NAME%.csproj'
-                                bat 'dotnet publish -o outLin -r linux-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=%TAG_NAME% -p:AssemblyVersion=%TAG_NAME% %PROJECT_NAME%.csproj'
-                                bat 'dotnet publish -o outOsx -r osx-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=%TAG_NAME% -p:AssemblyVersion=%TAG_NAME% %PROJECT_NAME%.csproj'
+                                bat 'dotnet publish -o outWin -r win-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=%TAG_NAME% -p:AssemblyVersion=%TAG_NAME% /p:DebugType=None %PROJECT_NAME%.csproj'
+                                bat 'dotnet publish -o outLin -r linux-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=%TAG_NAME% -p:AssemblyVersion=%TAG_NAME% /p:DebugType=None %PROJECT_NAME%.csproj'
+                                bat 'dotnet publish -o outOsx -r osx-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=%TAG_NAME% -p:AssemblyVersion=%TAG_NAME% /p:DebugType=None %PROJECT_NAME%.csproj'
                             }
                         }
 
