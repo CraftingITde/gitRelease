@@ -41,17 +41,22 @@ pipeline {
                                 bat 'dotnet publish -o outOsx -r osx-x64 -c Release -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=%TAG_NAME% -p:AssemblyVersion=%TAG_NAME% %PROJECT_NAME%.csproj'
                             }
                         }
+
+                        zip zipFile: 'win-x64_gitRelease.zip', archive: false, dir: './outWin/gitRelease.exe'
+                        zip zipFile: 'linux-x64_gitRelease.zip', archive: false, dir: './outLin/gitRelease.exe'
+                        zip zipFile: 'osx-x64_gitRelease.zip', archive: false, dir: './outOsx/gitRelease.exe'
+
                         //Hochladen
                         withCredentials([string(credentialsId: '66cf66bd-888b-489e-8fd8-10026e30e1e6', variable: 'TOKEN')]) {         
                             script {
                                 if (isUnix()){
-                                    sh './outLin/gitRelease github upload --tag $TAG_NAME --ApiToken $TOKEN --owner $REPO_OWNER_NAME --repo $PROJECT_NAME --filename ./outWin/gitRelease.exe'
-                                    sh './outLin/gitRelease github upload --tag $TAG_NAME --ApiToken $TOKEN --owner $REPO_OWNER_NAME --repo $PROJECT_NAME --filename ./outLin/gitRelease'
-                                    sh './outLin/gitRelease github upload --tag $TAG_NAME --ApiToken $TOKEN --owner $REPO_OWNER_NAME --repo $PROJECT_NAME --filename ./outOsx/gitRelease'
+                                    sh './outLin/gitRelease github upload --tag $TAG_NAME --ApiToken $TOKEN --owner $REPO_OWNER_NAME --repo $PROJECT_NAME --filename win-x64_gitRelease.zip'
+                                    sh './outLin/gitRelease github upload --tag $TAG_NAME --ApiToken $TOKEN --owner $REPO_OWNER_NAME --repo $PROJECT_NAME --filename linux-x64_gitRelease.zip'
+                                    sh './outLin/gitRelease github upload --tag $TAG_NAME --ApiToken $TOKEN --owner $REPO_OWNER_NAME --repo $PROJECT_NAME --filename osx-x64_gitRelease.zip'
                                 } else {
-                                    bat '.\\outWin\\gitRelease.exe github upload --tag %TAG_NAME% --ApiToken %TOKEN% --owner %REPO_OWNER_NAME% --repo %PROJECT_NAME% --filename .\\outWin\\gitRelease.exe'
-                                    bat '.\\outWin\\gitRelease.exe github upload --tag %TAG_NAME% --ApiToken %TOKEN% --owner %REPO_OWNER_NAME% --repo %PROJECT_NAME% --filename .\\outLin\\gitRelease'
-                                    bat '.\\outWin\\gitRelease.exe github upload --tag %TAG_NAME% --ApiToken %TOKEN% --owner %REPO_OWNER_NAME% --repo %PROJECT_NAME% --filename .\\outOsx\\gitRelease'
+                                    bat '.\\outWin\\gitRelease.exe github upload --tag %TAG_NAME% --ApiToken %TOKEN% --owner %REPO_OWNER_NAME% --repo %PROJECT_NAME% --filename win-x64_gitRelease.zip'
+                                    bat '.\\outWin\\gitRelease.exe github upload --tag %TAG_NAME% --ApiToken %TOKEN% --owner %REPO_OWNER_NAME% --repo %PROJECT_NAME% --filename linux-x64_gitRelease.zip'
+                                    bat '.\\outWin\\gitRelease.exe github upload --tag %TAG_NAME% --ApiToken %TOKEN% --owner %REPO_OWNER_NAME% --repo %PROJECT_NAME% --filename osx-x64_gitRelease.zip'
                                 }
                             }
                         }
