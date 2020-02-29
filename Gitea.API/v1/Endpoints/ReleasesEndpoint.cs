@@ -39,7 +39,9 @@ namespace Gitea.API.v1.Endpoints
                 var imageContent = new ByteArrayContent(archiveContents);
 
 
-                requestContent.Add(imageContent, "attachment", Path.GetFileName(filename));
+                var file = Path.GetFileName(filename);
+                if (file == null || file == "") { file = filename; };
+                requestContent.Add(imageContent, "attachment", file);
 
                 var resp = await rest.PostAsync("repos/" + HttpUtility.UrlEncode(owner) + "/" + HttpUtility.UrlEncode(name) + "/releases/" + HttpUtility.UrlEncode(release.Id.ToString()) + "/assets", requestContent);
 

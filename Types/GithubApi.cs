@@ -119,9 +119,11 @@ namespace gitRelease.Types
             {
                 using (var archiveContents = File.OpenRead(FileName))
                 {
+                    var file = Path.GetFileName(FileName);
+                    if (file == null || file == "") { file = FileName; };
                     var assetUpload = new ReleaseAssetUpload()
                     {
-                        FileName = Path.GetFileName(FileName),
+                        FileName = file,
                         RawData = archiveContents,
                         ContentType = "application/octet-stream"
                     };
