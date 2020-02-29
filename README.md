@@ -20,7 +20,7 @@ Latest Releases for windows, linux and MacOS [here](https://github.com/kstruessm
   docker pull craftingit/gitrelease:latest
 ```
 
-## Nuget ![](https://badgen.net/nuget/v/gitrelease)
+## Nuget [![](https://badgen.net/nuget/v/gitrelease)](https://www.nuget.org/packages/gitRelease/)
 
 ```sh
   dotnet tool install --global gitRelease 
