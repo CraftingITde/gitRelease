@@ -66,7 +66,7 @@ pipeline {
                         stage('Build Release') {
                             steps {           
                                 script {
-                                    def app = docker.build("craftingit/git config --get remote.origin.url")
+                                    def app = docker.build("craftingit/gitrelease")
                                     def version = env.TAG_NAME;
 
                                     docker.withRegistry('', 'CraftingIT-Bot_Dockerhub') {
