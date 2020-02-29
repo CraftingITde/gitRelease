@@ -42,7 +42,7 @@ pipeline {
                             }
                         }
                         //Hochladen
-                        withCredentials([string(credentialsId: 'GitHub-KST', variable: 'TOKEN')]) {
+                        withCredentials([string(credentialsId: '66cf66bd-888b-489e-8fd8-10026e30e1e6', variable: 'TOKEN')]) {
                             
                             script {
                                 if (isUnix()){
@@ -66,7 +66,7 @@ pipeline {
                         stage('Build Release') {
                             steps {           
                                 script {
-                                    def app = docker.build("craftingit/gitrelease")
+                                    def app = docker.build("craftingit/git config --get remote.origin.url")
                                     def version = env.TAG_NAME;
 
                                     docker.withRegistry('', 'CraftingIT-Bot_Dockerhub') {
