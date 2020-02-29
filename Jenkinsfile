@@ -60,11 +60,11 @@ pipeline {
                         withCredentials([string(credentialsId: 'CraftingIT-Nuget', variable: 'TOKEN')]) {         
                             script {
                                 if (isUnix()){
-                                    sh 'dotnet pack --configuration Release -p:PackageVersion=$TAG_NAME -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg $PROJECT_NAME.csproj'
-                                    sh 'dotnet nuget push ./bin/Release/gitRelease.*.nupkg -s https://www.nuget.org/api/v2/package -k $TOKEN --skip-duplicate'
+                                    sh 'dotnet pack --configuration Release -p:PackageVersion=$TAG_NAME -p:SymbolPackageFormat=snupkg $PROJECT_NAME.csproj'
+                                    sh 'dotnet nuget push ./nupkg/gitRelease.*.nupkg -s https://www.nuget.org/api/v2/package -k $TOKEN --skip-duplicate'
                                  } else {
-                                    bat 'dotnet pack --configuration Release -p:PackageVersion=%TAG_NAME% -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg %PROJECT_NAM%.csproj'
-                                    bat 'dotnet nuget push .\\bin\\Release\\gitRelease.*.nupkg -s https://www.nuget.org/api/v2/package -k %TOKEN% --skip-duplicate'
+                                    bat 'dotnet pack --configuration Release -p:PackageVersion=%TAG_NAME% -p:SymbolPackageFormat=snupkg %PROJECT_NAM%.csproj'
+                                    bat 'dotnet nuget push .\\nupkg\\gitRelease.*.nupkg -s https://www.nuget.org/api/v2/package -k %TOKEN% --skip-duplicate'
                                 }
                             }
                         }
