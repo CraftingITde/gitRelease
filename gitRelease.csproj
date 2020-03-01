@@ -10,9 +10,11 @@
     <Owners>CraftingIT</Owners>
     <PackageProjectUrl>https://hub.docker.com/r/craftingit/gitrelease</PackageProjectUrl>
     <Title>gitRelease</Title>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="LICENSE" Pack="true" Visible="false" PackagePath=""/>
     <Compile Remove="deps\**" />
     <Compile Remove="Gitea.API\**" />
     <EmbeddedResource Remove="deps\**" />
