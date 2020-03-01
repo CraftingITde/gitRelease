@@ -10,7 +10,7 @@
     <Owners>CraftingIT</Owners>
     <PackageProjectUrl>https://hub.docker.com/r/craftingit/gitrelease</PackageProjectUrl>
     <Title>gitRelease</Title>
-    <readme>nuget.md</readme>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,7 +20,6 @@
     <EmbeddedResource Remove="Gitea.API\**" />
     <None Remove="deps\**" />
     <None Remove="Gitea.API\**" />
-    <file src="nuget.md" target="nuget.md" Include="true"/>
   </ItemGroup>
 
   <ItemGroup>
