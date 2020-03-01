@@ -20,7 +20,7 @@
     <EmbeddedResource Remove="Gitea.API\**" />
     <None Remove="deps\**" />
     <None Remove="Gitea.API\**" />
-    <file src="nuget.md" target="nuget.md" />
+    <file src="nuget.md" target="nuget.md" Include="true"/>
   </ItemGroup>
 
   <ItemGroup>
