@@ -10,6 +10,7 @@
     <Owners>CraftingIT</Owners>
     <PackageProjectUrl>https://hub.docker.com/r/craftingit/gitrelease</PackageProjectUrl>
     <Title>gitRelease</Title>
+    <PackageReadmeFile>nuget.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,6 +20,7 @@
     <EmbeddedResource Remove="Gitea.API\**" />
     <None Remove="deps\**" />
     <None Remove="Gitea.API\**" />
+    <None Include="nuget.md" Pack="true" PackagePath=""/>
   </ItemGroup>
 
   <ItemGroup>
