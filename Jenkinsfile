@@ -49,15 +49,9 @@ pipeline {
                         //Hochladen
                         withCredentials([string(credentialsId: '66cf66bd-888b-489e-8fd8-10026e30e1e6', variable: 'TOKEN')]) {         
                             script {
-                                if (isUnix()){
-                                    sh './outLin/gitRelease github upload --tag $TAG_NAME --ApiToken $TOKEN --owner $REPO_OWNER_NAME --repo $PROJECT_NAME --filename win-x64_gitRelease.zip'
-                                    sh './outLin/gitRelease github upload --tag $TAG_NAME --ApiToken $TOKEN --owner $REPO_OWNER_NAME --repo $PROJECT_NAME --filename linux-x64_gitRelease.zip'
-                                    sh './outLin/gitRelease github upload --tag $TAG_NAME --ApiToken $TOKEN --owner $REPO_OWNER_NAME --repo $PROJECT_NAME --filename osx-x64_gitRelease.zip'
-                                } else {
-                                    bat '.\\outWin\\gitRelease.exe github upload --tag %TAG_NAME% --ApiToken %TOKEN% --owner %REPO_OWNER_NAME% --repo %PROJECT_NAME% --filename win-x64_gitRelease.zip'
-                                    bat '.\\outWin\\gitRelease.exe github upload --tag %TAG_NAME% --ApiToken %TOKEN% --owner %REPO_OWNER_NAME% --repo %PROJECT_NAME% --filename linux-x64_gitRelease.zip'
-                                    bat '.\\outWin\\gitRelease.exe github upload --tag %TAG_NAME% --ApiToken %TOKEN% --owner %REPO_OWNER_NAME% --repo %PROJECT_NAME% --filename osx-x64_gitRelease.zip'
-                                }
+                                release.releaseGitHubFile(env.TAG_NAME, env.TOKEN, 'win-x64_gitRelease.zip')
+                                release.releaseGitHubFile(env.TAG_NAME, env.TOKEN, 'linux-x64_gitRelease.zip')
+                                release.releaseGitHubFile(env.TAG_NAME, env.TOKEN, 'osx-x64_gitRelease.zip')
                             }
                         }
 
