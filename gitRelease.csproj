@@ -14,6 +14,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <RuntimeHostConfigurationOption Include="System.Globalization.Invariant" Value="true" />
     <None Include="LICENSE" Pack="true" Visible="false" PackagePath=""/>
     <Compile Remove="deps\**" />
     <Compile Remove="Gitea.API\**" />
@@ -24,7 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Octokit" Version="0.40.0" />
+    <PackageReference Include="Octokit" Version="0.42.0" />
     <PackageReference Include="CommandLineParser" Version="2.7.82" />
   </ItemGroup>
   <ItemGroup>
