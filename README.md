@@ -54,7 +54,7 @@ Copyright (C) 2020 gitRelease
 
 Latest Releases for windows, linux and MacOS [here](https://github.com/kstruessmann/gitRelease/releases) 
 
-## Docker [![](https://badgen.net/badge/docker/Docker?icon&label=View%20on)](https://hub.docker.com/r/craftingit/gitrelease) ![](https://badgen.net/docker/pulls/craftingit/nextcloud-cron?icon=docker&label=pulls) ![](https://badgen.net/docker/stars/craftingit/gitrelease?icon=docker&label=stars) ![](https://badgen.net/docker/size/craftingit/gitrelease?icon=docker)
+## Docker [![](https://badgen.net/badge/docker/Docker?icon&label=View%20on)](https://hub.docker.com/r/craftingit/gitrelease) ![](https://badgen.net/docker/pulls/craftingit/gitrelease?icon=docker&label=pulls) ![](https://badgen.net/docker/stars/craftingit/gitrelease?icon=docker&label=stars) ![](https://badgen.net/docker/size/craftingit/gitrelease?icon=docker)
 
 ```sh
   docker pull craftingit/gitrelease:latest
