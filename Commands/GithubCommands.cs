@@ -15,7 +15,7 @@ namespace gitRelease.Commands
         public class Create : GithubCommands
         {
 
-            [Option('n', "Name", Required = false, HelpText = "The name vor the Release")]
+            [Option('n', "Name", Required = false, HelpText = "The name for the Release")]
             public string Name { get; set; }
 
             [Option('p', "Prerelease", Required = false, HelpText = "Prerelease?")]
@@ -40,7 +40,7 @@ namespace gitRelease.Commands
         public class Update : GithubCommands
         {
 
-            [Option('n', "Name", Required = false, HelpText = "The name vor the Release")]
+            [Option('n', "Name", Required = false, HelpText = "The name for the Release")]
             public string Name { get; set; }
 
             [Option('p', "Prerelease", Required = false, HelpText = "Prerelease?")]
@@ -79,7 +79,7 @@ namespace gitRelease.Commands
         }
 
 
-        [Verb("upload", HelpText = "Upload a asset")]
+        [Verb("upload", HelpText = "Upload an asset")]
         public class Upload : GithubCommands
         {
 
