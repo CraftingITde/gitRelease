@@ -12,7 +12,7 @@ Copyright (C) 2020 gitRelease
 
   update          Updates a present Release
 
-  upload          Upload a asset
+  upload          Upload an asset
 
   updateBody      Updates a present Release
 
@@ -35,7 +35,7 @@ Copyright (C) 2020 gitRelease
 
   update          Updates a present Release
 
-  upload          Upload a asset
+  upload          Upload an asset
 
   updateBody      Updates a present Release
 
