@@ -20,7 +20,7 @@ namespace gitRelease.Commands
         [Option('p', HelpText = "Port to use. Default is 443")]
         public int Port { get; set; } = 443;
 
-        [Verb("upload", HelpText = "Upload a asset")]
+        [Verb("upload", HelpText = "Upload an asset")]
         public class Upload : GiteaCommands
         {
 
@@ -41,7 +41,7 @@ namespace gitRelease.Commands
         public class Update : GiteaCommands
         {
 
-            [Option('n', "Name", Required = false, HelpText = "The name vor the Release")]
+            [Option('n', "Name", Required = false, HelpText = "The name for the Release")]
             public string Name { get; set; }
 
             [Option("Prerelease", Required = false, HelpText = "Prerelease?")]
