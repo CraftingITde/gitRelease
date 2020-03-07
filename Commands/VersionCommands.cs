@@ -9,11 +9,11 @@ using System.Text.RegularExpressions;
 namespace gitRelease.Commands
 {
 
-    [Verb("tag", HelpText = "Gets the next availbale sematic version number.")]
+    [Verb("tag", HelpText = "Handel's semantic versioning.")]
     [ChildVerbs(typeof(Next), typeof(Generate))]
     public class VersionCommands : BaseCommand
     {
-        protected Versions getVersions(Repository repo)
+        protected Versions GetVersions(Repository repo)
         {
             Versions versions = new Versions(repo.Branches.First(b => b.IsCurrentRepositoryHead).FriendlyName);
 
@@ -21,7 +21,7 @@ namespace gitRelease.Commands
             {
                 if (versions.addBranch(b.FriendlyName) && Verbose)
                 {
-                    Console.WriteLine(string.Format("{0}", b.FriendlyName));
+                    Console.WriteLine($"{b.FriendlyName}");
                 }
             }
 
@@ -29,7 +29,7 @@ namespace gitRelease.Commands
             {
                 if (versions.addTag(t.FriendlyName) && Verbose)
                 {
-                    Console.WriteLine(string.Format("{0}", t.FriendlyName));
+                    Console.WriteLine($"{t.FriendlyName}");
                 }
             }
 
@@ -50,101 +50,97 @@ namespace gitRelease.Commands
         [Option('e', "Explicit", HelpText = "Only generate tag from commitmessage keywords")]
         public bool Explicit { get; set; } = false;
 
-        [Verb("next", HelpText = "Gets the next availbale sematic version number.")]
+        [Verb("next", HelpText = "Gets the next available semantic version number.")]
         public class Next : VersionCommands
         {
             public override void Execute()
             {
-                using (var repo = new Repository(RepositoryPath))
+                using var repo = new Repository(RepositoryPath);
+                Versions versions = GetVersions(repo);
+
+                if (Verbose)
                 {
-                    Versions versions = getVersions(repo);
+                    Console.WriteLine($"NextMajor: {versions.getNextMajor()}");
+                    Console.WriteLine($"NextMinor: {versions.getNextMinor()}");
+                    Console.WriteLine($"NextPatch: {versions.getNextPatch()}");
+                }
 
-                    if (Verbose)
-                    {
-                        Console.WriteLine($"NextMajor: {versions.getNextMajor()}");
-                        Console.WriteLine($"NextMinor: {versions.getNextMinor()}");
-                        Console.WriteLine($"NextPatch: {versions.getNextPatch()}");
-                    }
+                Commit c0 = repo.Commits.ElementAt(0);
 
-                    Commit c0 = repo.Commits.ElementAt(0);
-
-                    if (IsMajor(c0.MessageShort))
-                    {
-                        Console.WriteLine(versions.getNextMajor());
-                    }
-                    else if (IsMinor(c0.MessageShort))
-                    {
-                        Console.WriteLine(versions.getNextMinor());
-                    }
-                    else if (IsPatch(c0.MessageShort) || !Explicit)
-                    {
-                        Console.WriteLine(versions.getNextPatch());
-                    }
-                    else
-                    {
-                        Environment.Exit(-1);
-                    }
+                if (IsMajor(c0.MessageShort))
+                {
+                    Console.WriteLine(versions.getNextMajor());
+                }
+                else if (IsMinor(c0.MessageShort))
+                {
+                    Console.WriteLine(versions.getNextMinor());
+                }
+                else if (IsPatch(c0.MessageShort) || !Explicit)
+                {
+                    Console.WriteLine(versions.getNextPatch());
+                }
+                else
+                {
+                    Environment.Exit(-1);
                 }
             }
         }
 
-        [Verb("generate", HelpText = "Generates a new tag and commits to remote")]
+        [Verb("generate", HelpText = "Generates a new tag and version branch if necessary.")]
         public class Generate : VersionCommands
         {
             public override void Execute()
             {
-                using (var repo = new Repository(RepositoryPath))
+                using var repo = new Repository(RepositoryPath);
+                var versions = GetVersions(repo);
+
+                if (Verbose)
                 {
-                    Versions versions = getVersions(repo);
-
-                    if (Verbose)
-                    {
-                        Console.WriteLine($"NextMajor: {versions.getNextMajor()}");
-                        Console.WriteLine($"NextMinor: {versions.getNextMinor()}");
-                        Console.WriteLine($"NextPatch: {versions.getNextPatch()}");
-                    }
+                    Console.WriteLine($"NextMajor: {versions.getNextMajor()}");
+                    Console.WriteLine($"NextMinor: {versions.getNextMinor()}");
+                    Console.WriteLine($"NextPatch: {versions.getNextPatch()}");
+                }
 
 
 
-                    Commit current = repo.Commits.ElementAt(0);
-                    Commit previous = repo.Commits.ElementAt(1);
+                var current = repo.Commits.ElementAt(0);
+                var previous = repo.Commits.ElementAt(1);
 
-                    if (IsMajor(current.MessageShort))
-                    {
-                        repo.Branches.Add($"v{--versions.getNextMajor().Major}", previous.Sha);
-                        repo.ApplyTag(versions.getNextMajor().ToString(), current.Sha);
-                    }
-                    else if (IsMinor(current.MessageShort))
-                    {
-                        repo.ApplyTag(versions.getNextMinor().ToString(), current.Sha);
-                    }
-                    else if (IsPatch(current.MessageShort) || !Explicit)
-                    {
-                        repo.ApplyTag(versions.getNextPatch().ToString(), current.Sha);
-                    }
-                    else
-                    {
-                        Environment.Exit(-1);
-                    }
+                if (IsMajor(current.MessageShort))
+                {
+                    repo.Branches.Add($"v{--versions.getNextMajor().Major}", previous.Sha);
+                    repo.ApplyTag(versions.getNextMajor().ToString(), current.Sha);
+                }
+                else if (IsMinor(current.MessageShort))
+                {
+                    repo.ApplyTag(versions.getNextMinor().ToString(), current.Sha);
+                }
+                else if (IsPatch(current.MessageShort) || !Explicit)
+                {
+                    repo.ApplyTag(versions.getNextPatch().ToString(), current.Sha);
+                }
+                else
+                {
+                    Environment.Exit(-1);
                 }
             }
         }
 
-        protected bool IsMajor(string input)
+        private static bool IsMajor(string input)
         {
             const string pattern = @"^(\[MAJOR\])|(\[BREAKING\])";
 
             return Regex.IsMatch(input, pattern);
         }
 
-        protected bool IsMinor(string input)
+        private static bool IsMinor(string input)
         {
             const string pattern = @"^(\[MINOR\])|(\[FEATURE\])";
 
             return Regex.IsMatch(input, pattern);
         }
 
-        protected bool IsPatch(string input)
+        private static bool IsPatch(string input)
         {
             const string pattern = @"^(\[PATCH\])|(\[FIX\])";
 
