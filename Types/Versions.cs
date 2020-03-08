@@ -11,7 +11,7 @@ namespace gitRelease.Types
     {
         private string _currentBranch;
 
-        private string _masterBranch = "master";
+        public string MasterBranchName { get; set; } = "master";
         private List<Version> _versions = new List<Version>() {
             new Version(0, 0, 0)
         };
@@ -54,7 +54,7 @@ namespace gitRelease.Types
 
         public Version getNextMinor()
         {
-            if (_currentBranch == _masterBranch)
+            if (_currentBranch == MasterBranchName)
             {
                 int maxMajor = this._versions.Max(v => v.Major);
                 int maxMinor = this._versions.Where(v => v.Major == maxMajor).Max(v => v.Minor);
@@ -76,7 +76,7 @@ namespace gitRelease.Types
 
         public Version getNextPatch()
         {
-            if (_currentBranch == _masterBranch)
+            if (_currentBranch == MasterBranchName)
             {
                 int maxMajor = this._versions.Max(v => v.Major);
                 int maxMinor = this._versions.Where(v => v.Major == maxMajor).Max(v => v.Minor);

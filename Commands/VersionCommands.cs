@@ -9,13 +9,14 @@ using System.Text.RegularExpressions;
 namespace gitRelease.Commands
 {
 
-    [Verb("tag", HelpText = "Handel's semantic versioning.")]
+    [Verb("version", HelpText = "Handel's semantic versioning.")]
     [ChildVerbs(typeof(Next), typeof(Generate))]
     public class VersionCommands : BaseCommand
     {
         protected Versions GetVersions(Repository repo)
         {
             Versions versions = new Versions(repo.Branches.First(b => b.IsCurrentRepositoryHead).FriendlyName);
+            versions.MasterBranchName = MasterBranchName;
 
             foreach (Branch b in repo.Branches.Where(b => b.IsRemote && b.RemoteName == RemoteName))
             {
@@ -49,6 +50,9 @@ namespace gitRelease.Commands
 
         [Option('e', "Explicit", HelpText = "Only generate tag from commitmessage keywords")]
         public bool Explicit { get; set; } = false;
+
+        [Option("masterBranch", HelpText = "Name of the master Branch. Default: master")]
+        public string MasterBranchName { get; set; } = "master";
 
         [Verb("next", HelpText = "Gets the next available semantic version number.")]
         public class Next : VersionCommands

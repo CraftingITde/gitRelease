@@ -48,7 +48,7 @@ Copyright (C) 2020 gitRelease
 
 ### Tag
 ```` sh
-bash-3.2$ gitrelease tag
+bash-3.2$ gitrelease version
 gitRelease 0.1.0
 Copyright (C) 2020 gitRelease
 
