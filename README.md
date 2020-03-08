@@ -46,7 +46,7 @@ Copyright (C) 2020 gitRelease
   version         Display version information.
 ````
 
-### Tag
+### Version
 ```` sh
 bash-3.2$ gitrelease version
 gitRelease 0.1.0
