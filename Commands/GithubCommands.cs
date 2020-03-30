@@ -16,7 +16,7 @@ namespace gitRelease.Commands
         {
 
             [Option('n', "Name", Required = false, HelpText = "The name for the Release")]
-            public string Name { get; set; }
+             public string Name { get; set; }
 
             [Option('p', "Prerelease", Required = false, HelpText = "Prerelease?")]
             public bool Prerelease { get; set; }
