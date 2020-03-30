@@ -62,7 +62,7 @@ pipeline {
                                     sh 'dotnet pack --configuration Release -p:PackageVersion=$TAG_NAME -p:Version=$TAG_NAME -p:AssemblyVersion=$TAG_NAME -p:SymbolPackageFormat=snupkg $PROJECT_NAME.csproj'
                                     sh 'dotnet nuget push ./nupkg/gitRelease.*.nupkg -s https://www.nuget.org/api/v2/package -k $TOKEN --skip-duplicate'
                                  } else {
-                                    bat 'dotnet pack --configuration Release -p:PackageVersion=%TAG_NAME% -p:Version=%TAG_NAME% -p:AssemblyVersion=%TAG_NAME% -p:SymbolPackageFormat=snupkg %PROJECT_NAM%.csproj'
+                                    bat 'dotnet pack --configuration Release -p:PackageVersion=%TAG_NAME% -p:Version=%TAG_NAME% -p:AssemblyVersion=%TAG_NAME% -p:SymbolPackageFormat=snupkg %PROJECT_NAME%.csproj'
                                     bat 'dotnet nuget push .\\nupkg\\gitRelease.*.nupkg -s https://www.nuget.org/api/v2/package -k %TOKEN% --skip-duplicate'
                                 }
                             }

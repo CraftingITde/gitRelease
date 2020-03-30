@@ -10,7 +10,7 @@ namespace gitRelease
         static void Main(string[] args)
         {
 
-            Parser.Default.ParseVerbs<GithubCommands, GiteaCommands>(args)
+            Parser.Default.ParseVerbs<GithubCommands, GiteaCommands, VersionCommands>(args)
                 .WithParsed<BaseCommand>(opts => opts.Execute());
          
         }

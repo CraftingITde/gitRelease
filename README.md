@@ -14,7 +14,7 @@ Copyright (C) 2020 gitRelease
 
   update          Updates a present Release
 
-  upload          Upload a asset
+  upload          Upload an asset
 
   updateBody      Updates a present Release
 
@@ -29,17 +29,13 @@ Copyright (C) 2020 gitRelease
 
 ### Gitea
 ```` sh
-bash-3.2$ gitrelease gitea <URL>
+bash-3.2$ gitrelease gitea
 gitRelease 0.1.0
 Copyright (C) 2020 gitRelease
 
-  create          Creates a new Release
+  update          updating a Tag
 
-  update          Updates a present Release
-
-  upload          Upload a asset
-
-  updateBody      Updates a present Release
+  upload          Upload an asset
 
   isDraft         is the release a draft?
 
@@ -48,6 +44,21 @@ Copyright (C) 2020 gitRelease
   help            Display more information on a specific command.
 
   version         Display version information.
+````
+
+### Version
+```` sh
+bash-3.2$ gitrelease version
+gitRelease 0.1.0
+Copyright (C) 2020 gitRelease
+
+  next        Gets the next available semantic version number.
+
+  generate    Generates a new tag and version branch if necessary.
+
+  help        Display more information on a specific command.
+
+  version     Display version information.
 ````
 
 ## CLI Download 
