@@ -15,7 +15,8 @@ namespace gitRelease.Commands
     {
         protected Versions GetVersions(Repository repo)
         {
-            Versions versions = new Versions(repo.Branches.First(b => b.IsCurrentRepositoryHead).FriendlyName);
+            var currentBranchName = repo.Head.FriendlyName;
+            Versions versions = new Versions(currentBranchName);
             versions.MasterBranchName = MasterBranchName;
 
             foreach (Branch b in repo.Branches.Where(b => b.IsRemote && b.RemoteName == RemoteName))
