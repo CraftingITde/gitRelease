@@ -55,6 +55,9 @@ namespace gitRelease.Commands
         [Option("masterBranch", HelpText = "Name of the master Branch. Default: master")]
         public string MasterBranchName { get; set; } = "master";
 
+        [Option("skipReleaseKey", HelpText = "Keyword to skipp relese process")]
+        public string SkipReleaseKey { get; set; } = "SKIP_RELEASE";
+
         [Verb("next", HelpText = "Gets the next available semantic version number.")]
         public class Next : VersionCommands
         {
@@ -111,6 +114,11 @@ namespace gitRelease.Commands
                 var current = repo.Commits.ElementAt(0);
                 var previous = repo.Commits.ElementAt(1);
 
+                if (IsSkip(current.MessageShort))
+                {
+                    Environment.Exit(0);
+                }
+
                 if (IsMajor(current.MessageShort))
                 {
                     repo.Branches.Add($"v{--versions.getNextMajor().Major}", previous.Sha);
@@ -150,6 +158,11 @@ namespace gitRelease.Commands
             const string pattern = @"^(\[PATCH\])|(\[FIX\])";
 
             return Regex.IsMatch(input, pattern);
+        }
+
+        private  bool IsSkip(string input)
+        {
+            return input.Contains(SkipReleaseKey);
         }
     }
 }
