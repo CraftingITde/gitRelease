@@ -12,6 +12,7 @@
     <Title>gitRelease</Title>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <IncludeSymbolsInSingleFile>true</IncludeSymbolsInSingleFile>
+    <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
   <ItemGroup>
