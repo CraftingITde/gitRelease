@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1-alpine AS build-env
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1.401-alpine AS build-env
 WORKDIR /app
 
 # Alle Pakete wiederherstellen
