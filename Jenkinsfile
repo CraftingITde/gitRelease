@@ -4,6 +4,9 @@ pipeline {
 	agent {
 		label 'DOTNET'
 	}
+    triggers {
+        githubPush()
+    }
     stages{
         stage('Build') {
             steps {
