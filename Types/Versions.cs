@@ -54,10 +54,15 @@ namespace gitRelease.Types
 
         public Version getNextMinor()
         {
+            Console.Out.WriteLine(_currentBranch);
+            Console.Out.WriteLine(MasterBranchName);
+
             if (_currentBranch == MasterBranchName)
             {
                 int maxMajor = this._versions.Max(v => v.Major);
                 int maxMinor = this._versions.Where(v => v.Major == maxMajor).Max(v => v.Minor);
+
+                Console.Out.WriteLine(maxMinor);
 
                 return new Version(maxMajor, ++maxMinor);
             }
