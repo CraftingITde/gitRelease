@@ -1,13 +1,14 @@
 ﻿using CommandLine;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace gitRelease.Commands
 {
     [Verb("gitea", HelpText = "Record changes to the repository.")]
 
-    [ChildVerbs(typeof(Update), typeof(Upload), typeof(IsDraft), typeof(IsPrerelease))]
+    [ChildVerbs(typeof(Update), typeof(Upload), typeof(IsDraft), typeof(IsPrerelease), typeof(Download))]
     class GiteaCommands : BaseGitCommands
     {
 
@@ -84,10 +85,31 @@ namespace gitRelease.Commands
                 var client = new Gitea.API.v1.Client(Token, Server, Port, !Http);
                 var list = client.Repository.Release.Get(Owner, Repo);
                 var release = list.Find(r => r.Tag_name == this.Tag);
-                
+
                 Console.WriteLine(release.Prerelease ? "1" : "0");
             }
         }
+        [Verb("download", HelpText = "Download an asset")]
+        public class Download : GiteaCommands
+        {
+            public override void Execute()
+            {
 
+                var client = new Gitea.API.v1.Client(Token, Server, Port, !Http);
+
+                var releases = client.Repository.Release.Get(Owner, Repo);
+
+                foreach (var release in releases.Where(r => r.Tag_name == Tag))
+                {
+                    foreach (var attachmend in release.Assets)
+                    {
+                      var file = client.Repository.Release.Download(attachmend.browser_download_url);
+
+                        System.IO.File.WriteAllBytes(attachmend.name, file);
+                    }
+                }
+
+            }
+        }
     }
 }
