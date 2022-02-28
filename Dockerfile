@@ -12,5 +12,5 @@ RUN dotnet publish gitRelease.csproj -c Release -o out -r linux-musl-x64 --self-
 FROM mcr.microsoft.com/dotnet/runtime:6.0.2-alpine3.14-amd64
 WORKDIR /app
 COPY --from=build-env /app/out .
-
-ENTRYPOINT ["./gitRelease"]
+ENV PATH="/app:${PATH}"
+ENTRYPOINT ["gitRelease"]
