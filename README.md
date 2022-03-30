@@ -1,5 +1,4 @@
-# gitRelease [![Build Status](https://jenkins.craftingit.de/buildStatus/icon?job=kstruessmann%28GitHub%29%2FgitRelease%2Fmaster)](https://jenkins.craftingit.de/job/kstruessmann(GitHub)/job/gitRelease/job/master/)
-
+# gitRelease [![Build Status](https://drone.craftingit.de/api/badges/CraftingITde/gitRelease/status.svg)](https://drone.craftingit.de/CraftingITde/gitRelease)
 gitRelease ist ein .net Core Consolen Program, welches verwendet werden kann um in Verschiedenen CI Systemen Releases zu erstellen oder zu bearbeiten. Aktuell wird GitHub und Gitea als Api Entpunkt unterstützt.
 
 ## Usage
@@ -52,13 +51,15 @@ bash-3.2$ gitrelease version
 gitRelease 0.1.0
 Copyright (C) 2020 gitRelease
 
-  next        Gets the next available semantic version number.
+  next            Gets the next available semantic version number.
 
-  generate    Generates a new tag and version branch if necessary.
+  generate        Generates a new tag and version branch if necessary.
 
-  help        Display more information on a specific command.
+  help            Display more information on a specific command.
 
-  version     Display version information.
+  version         Display version information.
+
+  generate-notes  Generate release notes content for a release
 ````
 
 ## CLI Download 

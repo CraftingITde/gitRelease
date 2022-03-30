@@ -10,7 +10,7 @@ namespace gitRelease.Commands
 {
 
     [Verb("version", HelpText = "Handel's semantic versioning.")]
-    [ChildVerbs(typeof(Next), typeof(Generate))]
+    [ChildVerbs(typeof(Next), typeof(Generate), typeof(GenerateNotes))]
     public class VersionCommands : BaseCommand
     {
         protected Versions GetVersions(Repository repo)
@@ -138,6 +138,27 @@ namespace gitRelease.Commands
                 }
             }
         }
+
+        [Verb("generate-notes", HelpText = "Generate release notes content for a release")]
+        public class GenerateNotes : VersionCommands
+        {
+            public override void Execute()
+            {
+                var repository = new LibGit2Sharp.Repository(RepositoryPath);
+
+                var latest = repository.Tags.First();
+
+                var newCommits = repository.Commits.TakeWhile(com => com.Id.Sha != latest.Target.Id.Sha).ToList();
+
+                var changelog = $"# Changelog {Environment.NewLine}";
+                foreach (var commit in newCommits)
+                {
+                    changelog += $"- {commit.Message} {Environment.NewLine}";
+                }
+                Console.WriteLine(changelog);
+            }
+        }
+
 
         private static bool IsMajor(string input)
         {
