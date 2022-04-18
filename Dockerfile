@@ -9,7 +9,7 @@ RUN dotnet restore
 RUN dotnet publish gitRelease.csproj -c Release -o out -r linux-musl-x64 --self-contained true /p:PublishTrimmed=true
 
 # Und Final
-FROM mcr.microsoft.com/dotnet/runtime:6.0.3-alpine3.14-amd64
+FROM mcr.microsoft.com/dotnet/runtime:6.0.4-alpine3.14-amd64
 WORKDIR /app
 COPY --from=build-env /app/out .
 RUN ln -s /app/gitRelease /usr/bin/gitRelease
