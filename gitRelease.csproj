@@ -27,10 +27,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CraftingIT.GiteaAPI" Version="0.0.5" />
+    <PackageReference Include="CraftingIT.GiteaAPI" Version="0.0.6" />
     <PackageReference Include="LibGit2Sharp" Version="0.26.2" />
-    <PackageReference Include="Octokit" Version="0.50.0" />
-    <PackageReference Include="CommandLineParser" Version="2.8.0" />
+    <PackageReference Include="Octokit" Version="2.0.1" />
+    <PackageReference Include="CommandLineParser" Version="2.9.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="CommandLineParser.2.6.0\.signature.p7s" />
