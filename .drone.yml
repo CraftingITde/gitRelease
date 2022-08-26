@@ -27,7 +27,7 @@ steps:
       from_secret: TOKEN_NUGET
   commands:
   - dotnet pack --configuration Release -p:PackageVersion=$DRONE_TAG -p:Version=$DRONE_TAG -p:AssemblyVersion=$DRONE_TAG -p:SymbolPackageFormat=snupkg gitRelease.csproj
-  - dotnet nuget push ./nupkg/gitRelease.*.nupkg -s https://www.nuget.org/api/v2/package -k $TOKEN --skip-duplicate
+  - dotnet nuget push ./nupkg/gitRelease.*.nupkg -s https://www.nuget.org/api/v2/package -k $TOKEN --skip-duplicate --timeout 1000
 - name: Docker  
   image: plugins/docker
   settings:
