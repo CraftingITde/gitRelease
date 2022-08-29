@@ -60,6 +60,9 @@ steps:
   - dotnet publish -o outOsx -r osx-x64 -c Release --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=$DRONE_TAG -p:AssemblyVersion=$DRONE_TAG /p:DebugType=None  /p:IncludeSymbolsInSingleFile=false gitRelease.csproj
 - name: zip files
   image: craftingit/ci-tools-docker
+  depends_on:
+    - build files
+    - Docker
   commands:
     - zip -r win-x64_gitRelease.zip outWin
     - zip -r linux-x64_gitRelease.zip outLin
@@ -67,8 +70,7 @@ steps:
 - name: upload files
   image: craftingit/gitrelease  
   depends_on:
-    - Docker
-    - build files
+    - zip files
   environment:
     TOKEN:
       from_secret: TOKEN_GITHUB
