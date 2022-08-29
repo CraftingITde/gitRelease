@@ -37,6 +37,17 @@ steps:
       from_secret: docker_password
     repo: craftingit/gitrelease
     auto_tag: true
+- name: Docker2  
+  image: plugins/docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    dockerfile: Dockerfile2
+    repo: craftingit/gitrelease
+    tags:
+      - base
 - name: build files  
   image: mcr.microsoft.com/dotnet/sdk:6.0
   commands:
