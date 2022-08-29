@@ -40,7 +40,8 @@ steps:
     repo: craftingit/gitrelease
     auto_tag: true
 - name: Docker2 
-  depends_on: []
+  depends_on:
+    - Docker
   image: plugins/docker
   settings:
     username:
