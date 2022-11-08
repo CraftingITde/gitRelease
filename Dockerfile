@@ -6,7 +6,7 @@ COPY . ./
 RUN dotnet restore -r alpine.3.9-x64
 
 # Jetzt Bauen
-RUN dotnet publish gitRelease.csproj -c Release -o out --no-self-contained --no-restore -r alpine.3.9-x64 /p:PublishSingleFile=true /p:PublishTrimmed=true
+RUN dotnet publish gitRelease.csproj -c Release -o out --no-self-contained --no-restore -r alpine.3.9-x64 /p:PublishSingleFile=true
 
 # Und Final
 FROM mcr.microsoft.com/dotnet/runtime:6.0-alpine
