@@ -26,9 +26,13 @@ namespace gitRelease.Commands
                     Console.WriteLine($"{b.FriendlyName}");
                 }
             }
+            var currentBranch = repo.Head;
 
             foreach (Tag t in repo.Tags)
             {
+                if (!currentBranch.Commits.Any(c => c.Id == t.Target.Id))
+                    continue;
+
                 if (versions.addTag(t.FriendlyName) && Verbose)
                 {
                     Console.WriteLine($"{t.FriendlyName}");
@@ -181,7 +185,7 @@ namespace gitRelease.Commands
             return Regex.IsMatch(input, pattern);
         }
 
-        private  bool IsSkip(string input)
+        private bool IsSkip(string input)
         {
             return input.Contains(SkipReleaseKey);
         }
