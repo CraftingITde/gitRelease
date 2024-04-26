@@ -21,7 +21,7 @@ name: Release
 
 steps:
 - name: nuget  
-  image: mcr.microsoft.com/dotnet/sdk:7.0
+  image: mcr.microsoft.com/dotnet/sdk:8.0
   depends_on: []
   environment:
     TOKEN:
@@ -40,7 +40,7 @@ steps:
     repo: craftingit/gitrelease
     auto_tag: true
 - name: build files  
-  image: mcr.microsoft.com/dotnet/sdk:7.0
+  image: mcr.microsoft.com/dotnet/sdk:8.0
   depends_on: []
   commands:
   - dotnet publish -o outWin -r win-x64 -c Release --self-contained -p:IncludeSymbolsInSingleFile=false -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=$DRONE_TAG -p:AssemblyVersion=$DRONE_TAG /p:DebugType=None /p:IncludeSymbolsInSingleFile=false gitRelease.csproj

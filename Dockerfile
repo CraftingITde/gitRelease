@@ -1,14 +1,14 @@
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build-env
 WORKDIR /app
 
 # Alle Pakete wiederherstellen
 COPY . ./
-RUN dotnet restore -r alpine.3.9-x64
+RUN dotnet restore -r alpine.3.19
 
 # Jetzt Bauen
-RUN dotnet publish gitRelease.csproj -c Release -o out --no-self-contained --no-restore -r alpine.3.9-x64
+RUN dotnet publish gitRelease.csproj -c Release -o out --no-self-contained --no-restore -r alpine.3.19-x64
 # Und Final
-FROM mcr.microsoft.com/dotnet/runtime:7.0-alpine
+FROM mcr.microsoft.com/dotnet/runtime:8.0-alpine3.19
 RUN apk add --no-cache \
         git
 WORKDIR /app
