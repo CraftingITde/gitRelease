@@ -63,9 +63,9 @@ steps:
     TOKEN:
       from_secret: TOKEN_GITHUB
   commands:
-    - gitRelease github upload --tag $DRONE_TAG --ApiToken ${token} --owner CraftingITde --repo gitRelease --filename win-x64_gitRelease.zip
-    - gitRelease github upload --tag $DRONE_TAG --ApiToken ${token} --owner CraftingITde --repo gitRelease --filename linux-x64_gitRelease.zip
-    - gitRelease github upload --tag $DRONE_TAG --ApiToken ${token} --owner CraftingITde --repo gitRelease --filename osx-x64_gitRelease.zip
+    - /app/gitRelease github upload --tag $DRONE_TAG --ApiToken ${token} --owner CraftingITde --repo gitRelease --filename win-x64_gitRelease.zip
+    - /app/gitRelease github upload --tag $DRONE_TAG --ApiToken ${token} --owner CraftingITde --repo gitRelease --filename linux-x64_gitRelease.zip
+    - /app/gitRelease github upload --tag $DRONE_TAG --ApiToken ${token} --owner CraftingITde --repo gitRelease --filename osx-x64_gitRelease.zip
 
 trigger:
   event:
