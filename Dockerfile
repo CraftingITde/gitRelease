@@ -9,7 +9,7 @@ RUN dotnet restore
 RUN dotnet publish gitRelease.csproj -c Release -o out --no-self-contained --no-restore
 # Und Final
 FROM mcr.microsoft.com/dotnet/runtime:8.0-jammy
-RUN apk add --no-cache \
+RUN apt-get update && apt-get install -y --no-install-recommends \
         git
 WORKDIR /app
 COPY --from=build-env /app/out .
