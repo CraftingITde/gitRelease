@@ -3,10 +3,9 @@ WORKDIR /app
 
 # Alle Pakete wiederherstellen
 COPY . ./
-RUN dotnet restore
 
 # Jetzt Bauen
-RUN dotnet publish gitRelease.csproj -c Release -o out --self-contained --no-restore
+RUN dotnet publish gitRelease.csproj -c Release -o out --self-contained
 # Und Final
 FROM debian
 WORKDIR /app
