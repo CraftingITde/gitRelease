@@ -3,10 +3,9 @@ WORKDIR /app
 
 # Alle Pakete wiederherstellen
 COPY . ./
-RUN dotnet restore
 
 # Jetzt Bauen
-RUN dotnet publish gitRelease.csproj -c Release -o out --self-contained --no-restore
+RUN dotnet publish gitRelease.csproj -c Release -o out --self-contained
 # Und Final
 FROM mcr.microsoft.com/dotnet/runtime:8.0-jammy
 RUN apt-get update && apt-get install -y --no-install-recommends \
