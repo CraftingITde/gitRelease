@@ -1,0 +1,22 @@
+name: release-artifacts
+
+on:
+    push:
+      tags:
+        - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: build files 
+      run: |
+        dotnet pack --configuration Release -p:PackageVersion=${{ github.ref_name }} -p:Version=${{ github.ref_name }} -p:SymbolPackageFormat=snupkg gitRelease.csproj
+        dotnet nuget push ./nupkg/gitRelease.*.nupkg -s https://www.nuget.org/api/v2/package -k ${{ secrets.TOKEN_NUGET }} --skip-duplicate --timeout 1000

@@ -1,5 +1,5 @@
-# gitRelease [![Build Status](https://drone.craftingit.de/api/badges/CraftingITde/gitRelease/status.svg)](https://drone.craftingit.de/CraftingITde/gitRelease)
-gitRelease ist ein .net Core Consolen Program, welches verwendet werden kann um in Verschiedenen CI Systemen Releases zu erstellen oder zu bearbeiten. Aktuell wird GitHub und Gitea als Api Entpunkt unterstützt.
+# gitRelease
+gitRelease ist ein .net Consolen Program, welches verwendet werden kann um in Verschiedenen CI Systemen Releases zu erstellen oder zu bearbeiten. Aktuell wird GitHub und Gitea als Api Entpunkt unterstützt.
 
 ## Usage
 

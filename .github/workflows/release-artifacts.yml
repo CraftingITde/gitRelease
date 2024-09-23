@@ -1,0 +1,39 @@
+name: release-artifacts
+
+on:
+    push:
+      tags:
+        - "*"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: build files 
+      run: |
+        dotnet publish -o outWin -r win-x64 -c Release --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=${{ github.ref_name }} gitRelease.csproj
+        dotnet publish -o outLin -r linux-x64 -c Release --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=${{ github.ref_name }} gitRelease.csproj
+        dotnet publish -o outOsx -r osx-x64 -c Release --self-contained -p:PublishSingleFile=true -p:PublishTrimmed=true -p:Version=${{ github.ref_name }} gitRelease.csproj
+    - name: zip Windows
+      run: zip -r ../win-x64_gitRelease.zip *
+      working-directory: outWin
+    - name: zip Linux
+      run: zip -r ../linux-x64_gitRelease.zip *
+      working-directory: outLin
+    - name: zip OSX
+      run: zip -r ../osx-x64_gitRelease.zip *
+      working-directory: outOsx
+    - name: Upload
+      uses: softprops/action-gh-release@v2
+      with:
+        files: |
+          osx-x64_gitRelease.zip
+          win-x64_gitRelease.zip
+          linux-x64_gitRelease.zip
