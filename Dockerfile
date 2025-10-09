@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build-env
 WORKDIR /app
 
 # Alle Pakete wiederherstellen
@@ -7,7 +7,7 @@ COPY . ./
 # Jetzt Bauen
 RUN dotnet publish gitRelease.csproj -c Release -o out --self-contained
 # Und Final
-FROM debian
+FROM ubuntu:24.04
 WORKDIR /app
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
