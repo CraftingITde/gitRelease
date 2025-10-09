@@ -1,6 +1,39 @@
 # gitRelease
 gitRelease ist ein .net Consolen Program, welches verwendet werden kann um in Verschiedenen CI Systemen Releases zu erstellen oder zu bearbeiten. Aktuell wird GitHub und Gitea als Api Entpunkt unterstützt.
 
+## GitHub Action
+
+gitRelease kann auch als GitHub Action verwendet werden, um Releases direkt in deinen Workflows zu verwalten.
+
+### Verwendung
+
+```yaml
+- name: Create Release
+  uses: CraftingITde/gitRelease@master
+  with:
+    command: 'github create'
+    token: ${{ secrets.GITHUB_TOKEN }}
+    tag: 'v1.0.0'
+    name: 'Release v1.0.0'
+    body: 'Release description'
+    prerelease: false
+    draft: false
+```
+
+### Verfügbare Inputs
+
+- `command`: Der auszuführende Befehl (z.B. `github create`, `github update`, `github upload`, `version next`)
+- `token`: GitHub Token für die Authentifizierung (meist `secrets.GITHUB_TOKEN`)
+- `owner`: Repository Owner (optional, Standard: aktueller Owner)
+- `repo`: Repository Name (optional, Standard: aktuelles Repository)
+- `tag`: Tag-Name für das Release
+- `name`: Release-Name
+- `body`: Release-Beschreibung
+- `prerelease`: Als Prerelease markieren (true/false)
+- `draft`: Als Draft markieren (true/false)
+- `file`: Datei-Pfad für Asset-Upload
+- `label`: Label für das Asset
+
 ## Usage
 
 ### Github
