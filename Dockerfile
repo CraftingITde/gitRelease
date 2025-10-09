@@ -8,7 +8,6 @@ COPY . ./
 RUN dotnet publish gitRelease.csproj -c Release -o out
 # Und Final
 FROM mcr.microsoft.com/dotnet/runtime:9.0
-WORKDIR /app
 
 RUN apt-get -y update &&  \ 
     apt-get install --no-install-recommends  \
@@ -18,7 +17,6 @@ RUN apt-get -y update &&  \
 COPY --from=build-env /app/out /app
 
 RUN echo -e '#!/bin/bash\ndotnet /app/gitRelease.dll "$@"' > /usr/bin/gitRelease && \
-    chmod +x /usr/bin/gitRelease && \
-    cp /usr/bin/gitRelease /usr/bin/gitrelease
+    chmod +x /usr/bin/gitRelease 
 
-ENTRYPOINT ["dotnet", "gitRelease.dll"]
+ENTRYPOINT ["dotnet", "/app/gitRelease.dll"]
