@@ -11,7 +11,7 @@ namespace gitRelease.Commands
     [ChildVerbs(typeof(Create), typeof(Update), typeof(Upload), typeof(UpdateBody) , typeof(IsDraft), typeof(IsPrerelease))]
     public class GithubCommands : BaseGitCommands
     {
-        [Option('s', "server", Required = true, HelpText = "the Server Adress")]
+        [Option('s', "server", Required = false, HelpText = "the Server Adress")]
         public string Server { get; set; } = "github.com";
         
         [Verb("create", HelpText = "Creates a new Release")]

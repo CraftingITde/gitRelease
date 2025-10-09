@@ -73,6 +73,11 @@ runs:
           CMD="$CMD --ApiToken '${{ inputs.token }}'"
         fi
 
+        # Add server
+        if [ -n "${{ inputs.server }}" ]; then
+          CMD="$CMD --server '${{ inputs.server }}'"
+        fi
+
         # Add owner
         if [ -n "${{ inputs.owner }}" ]; then
           CMD="$CMD --owner '${{ inputs.owner }}'"
