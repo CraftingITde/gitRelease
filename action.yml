@@ -65,6 +65,11 @@ runs:
           craftingit/gitrelease:latest \
           ${{ inputs.command }}"
         
+        # Add Token
+        if [ -n "${{ inputs.token } }}" ]; then
+          CMD="$CMD --ApiToken '${{ inputs.token }}'"
+        fi
+
         # Add owner
         if [ -n "${{ inputs.owner }}" ]; then
           CMD="$CMD --owner '${{ inputs.owner }}'"
@@ -102,7 +107,7 @@ runs:
         
         # Add file
         if [ -n "${{ inputs.file }}" ]; then
-          CMD="$CMD --file '${{ inputs.file }}'"
+          CMD="$CMD --filename '${{ inputs.file }}'"
         fi
         
         # Add label
