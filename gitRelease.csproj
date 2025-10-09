@@ -11,7 +11,7 @@
     <PackageProjectUrl>https://hub.docker.com/r/craftingit/gitrelease</PackageProjectUrl>
     <Title>gitRelease</Title>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <IncludeSymbolsInSingleFile>true</IncludeSymbolsInSingleFile>
+    <IncludeSymbolsInSingleFile>false</IncludeSymbolsInSingleFile>
     <InvariantGlobalization>true</InvariantGlobalization>
   </PropertyGroup>
 
