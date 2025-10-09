@@ -11,23 +11,24 @@ namespace gitRelease.Types
     public class GithubApi
     {
 
-        private GitHubClient client = new GitHubClient(new ProductHeaderValue("gitrelease"));
+        private readonly GitHubClient _client;
+        private readonly string _owner;
+        private readonly string _repo;
 
-        private string owner;
-        private string repo;
-
-        public GithubApi(string Token, string owner, string repo)
+        public GithubApi(string Token, string owner, string repo, string sever)
         {
+            var uri = new Uri($"https://api.{sever}/");
+            _client = new GitHubClient(new ProductHeaderValue("gitrelease"), uri);
             var tokenAuth = new Credentials(Token);
-            client.Credentials = tokenAuth;
-            this.owner = owner;
-            this.repo = repo;
+            _client.Credentials = tokenAuth;
+            this._owner = owner;
+            this._repo = repo;
         }
 
 
         public void GetReleases()
         {
-            var task = client.Repository.Release.GetAll(owner, repo);
+            var task = _client.Repository.Release.GetAll(_owner, _repo);
             task.Wait();
             var releases = task.Result;
             var latest = releases[0];
@@ -47,7 +48,7 @@ namespace gitRelease.Types
                 newRelease.Prerelease = Prerelease;
                 newRelease.Draft = Draftrelease;
 
-                var result = client.Repository.Release.Create(owner, repo, newRelease);
+                var result = _client.Repository.Release.Create(_owner, _repo, newRelease);
                 result.Wait();
             }
             catch
@@ -62,7 +63,7 @@ namespace gitRelease.Types
         {
             try
             {
-                var release = client.Repository.Release.Get(owner, repo, TagName);
+                var release = _client.Repository.Release.Get(_owner, _repo, TagName);
                 release.Wait();
 
                 var updateRelease = release.Result.ToUpdate();
@@ -71,7 +72,7 @@ namespace gitRelease.Types
                 updateRelease.Name = Name;
                 updateRelease.Body = Body.Replace("\\n", Environment.NewLine);
 
-                var result = client.Repository.Release.Edit(owner, repo, release.Result.Id, updateRelease);
+                var result = _client.Repository.Release.Edit(_owner, _repo, release.Result.Id, updateRelease);
                 result.Wait();
             }
             catch
@@ -87,7 +88,7 @@ namespace gitRelease.Types
         {
             try
             {
-                var release = client.Repository.Release.Get(owner, repo, TagName);
+                var release = _client.Repository.Release.Get(_owner, _repo, TagName);
                 release.Wait();
 
 
@@ -100,7 +101,7 @@ namespace gitRelease.Types
                 var updateRelease = release.Result.ToUpdate();
                 updateRelease.Body = Body.Replace("\\n", Environment.NewLine); ;
 
-                var result = client.Repository.Release.Edit(owner, repo, release.Result.Id, updateRelease);
+                var result = _client.Repository.Release.Edit(_owner, _repo, release.Result.Id, updateRelease);
                 result.Wait();
             }
             catch
@@ -127,9 +128,9 @@ namespace gitRelease.Types
                         RawData = archiveContents,
                         ContentType = "application/octet-stream"
                     };
-                    var release = client.Repository.Release.Get(owner, repo, TagName);
+                    var release = _client.Repository.Release.Get(_owner, _repo, TagName);
                     release.Wait();
-                    var asset = client.Repository.Release.UploadAsset(release.Result, assetUpload);
+                    var asset = _client.Repository.Release.UploadAsset(release.Result, assetUpload);
                     asset.Wait();
                 }
             }
@@ -142,7 +143,7 @@ namespace gitRelease.Types
 
         public Release GetRelease(string TagName)
         {
-            Task<IReadOnlyList<Release>> releases = client.Repository.Release.GetAll(owner, repo);
+            Task<IReadOnlyList<Release>> releases = _client.Repository.Release.GetAll(_owner, _repo);
             releases.Wait();
 
             Release release1 = releases.Result.Where(x => x.TagName == TagName).FirstOrDefault();

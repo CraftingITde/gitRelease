@@ -11,6 +11,9 @@ inputs:
   token:
     description: 'GitHub token for authentication (usually secrets.GITHUB_TOKEN)'
     required: true
+  server:
+    description: 'Gitea server address (required) or Github Enterprise server address (optional)'
+    required: false
   owner:
     description: 'Repository owner (defaults to current repository owner)'
     required: false

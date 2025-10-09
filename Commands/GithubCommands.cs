@@ -11,6 +11,9 @@ namespace gitRelease.Commands
     [ChildVerbs(typeof(Create), typeof(Update), typeof(Upload), typeof(UpdateBody) , typeof(IsDraft), typeof(IsPrerelease))]
     public class GithubCommands : BaseGitCommands
     {
+        [Option('s', "server", Required = true, HelpText = "the Server Adress")]
+        public string Server { get; set; } = "github.com";
+        
         [Verb("create", HelpText = "Creates a new Release")]
         public class Create : GithubCommands
         {
@@ -30,7 +33,7 @@ namespace gitRelease.Commands
 
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo);
+                var github = new GithubApi(Token, Owner, Repo, Server);
 
                 github.CreateRelease(Tag, Body, Name, Prerelease, DraftRelease);
             }
@@ -54,7 +57,7 @@ namespace gitRelease.Commands
 
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo);
+                var github = new GithubApi(Token, Owner, Repo, Server);
 
                 github.UpdateRelease(Tag, Body, Name, Prerelease, DraftRelease);
             }
@@ -72,7 +75,7 @@ namespace gitRelease.Commands
 
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo);
+                var github = new GithubApi(Token, Owner, Repo, Server);
 
                 github.UpdateReleaseBody(Tag, Lines, Body);
             }
@@ -89,7 +92,7 @@ namespace gitRelease.Commands
             public override void Execute()
             {
 
-                var github = new GithubApi(Token, Owner, Repo);
+                var github = new GithubApi(Token, Owner, Repo, Server);
 
                 github.UploadAsset(Tag, FileName);
             }
@@ -101,7 +104,7 @@ namespace gitRelease.Commands
 
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo);
+                var github = new GithubApi(Token, Owner, Repo, Server);
 
 
                 Release release = github.GetRelease(Tag); ;
@@ -115,7 +118,7 @@ namespace gitRelease.Commands
         {
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo);
+                var github = new GithubApi(Token, Owner, Repo, Server);
                 Release release = github.GetRelease(Tag); ;
                 Console.WriteLine(release.Prerelease ? "1" : "0");
             }

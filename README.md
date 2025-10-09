@@ -33,6 +33,7 @@ gitRelease kann auch als GitHub Action verwendet werden, um Releases direkt in d
 - `draft`: Als Draft markieren (true/false)
 - `file`: Datei-Pfad für Asset-Upload
 - `label`: Label für das Asset
+- `server`: Server-URL für Gitea (Pflicht) oder Github Enterprise (optional) z.b. `git.yourdomain.com` oder `yourname.ghe.com`
 
 ## Usage
 
