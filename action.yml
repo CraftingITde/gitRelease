@@ -122,6 +122,8 @@ runs:
         if [ -n "${{ inputs.label }}" ]; then
           CMD="$CMD --label '${{ inputs.label }}'"
         fi
+
+        CMD="$CMD -v"
         
         # Execute command
         echo "Executing: $CMD"
