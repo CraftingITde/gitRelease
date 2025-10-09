@@ -5,15 +5,20 @@ WORKDIR /app
 COPY . ./
 
 # Jetzt Bauen
-RUN dotnet publish gitRelease.csproj -c Release -o out --self-contained
+RUN dotnet publish gitRelease.csproj -c Release -o out
 # Und Final
-FROM ubuntu:24.04
+FROM mcr.microsoft.com/dotnet/runtime:9.0
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends \
-        git
+RUN apt-get -y update &&  \ 
+    apt-get install --no-install-recommends  \
+    -y git && \
+    rm -rf /var/lib/apt/lists/*
 
-COPY --from=build-env /app/out .
-ENV PATH="${PATH}:/app"
-RUN  chmod u+x /app/gitRelease
-ENTRYPOINT ["gitRelease"]
+COPY --from=build-env /app/out /app
+
+RUN echo -e '#!/bin/bash\ndotnet /app/gitRelease.dll "$@"' > /usr/bin/gitRelease && \
+    chmod +x /usr/bin/gitRelease && \
+    cp /usr/bin/gitRelease /usr/bin/gitrelease
+
+ENTRYPOINT ["dotnet", "gitRelease.dll"]
