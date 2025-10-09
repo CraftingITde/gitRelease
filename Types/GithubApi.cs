@@ -15,11 +15,27 @@ namespace gitRelease.Types
         private readonly string _repo;
         private readonly bool _verbose = false;
 
-        public GithubApi(string Token, string owner, string repo, string sever, bool verbose)
+        public GithubApi(string token, string owner, string repo, string sever, bool verbose)
         {
-            var uri = new Uri($"https://api.{sever}/");
-            _client = new GitHubClient(new ProductHeaderValue("gitrelease"), uri);
-            var tokenAuth = new Credentials(Token);
+            if (sever == string.Empty)
+            {
+                if (verbose)
+                {
+                    Console.WriteLine($"Server was not set. Using github.com");
+                }
+                _client = new GitHubClient(new ProductHeaderValue("gitrelease"));
+            }
+            else
+            {
+                var uri = new Uri($"https://{sever}/");
+                if (verbose)
+                {
+                    Console.WriteLine($"Server: {uri}");
+                }
+                _client = new GitHubClient(new ProductHeaderValue("gitrelease"), uri);
+            }
+
+            var tokenAuth = new Credentials(token);
             _client.Credentials = tokenAuth;
             _owner = owner;
             _repo = repo;
@@ -29,7 +45,6 @@ namespace gitRelease.Types
             {
                 Console.WriteLine($"Owner: {_owner}");
                 Console.WriteLine($"Repo: {_repo}");
-                Console.WriteLine($"Server: {sever}");
             }
         }
 

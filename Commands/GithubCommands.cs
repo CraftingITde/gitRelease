@@ -12,7 +12,7 @@ namespace gitRelease.Commands
     public class GithubCommands : BaseGitCommands
     {
         [Option('s', "server", Required = false, HelpText = "the Server Adress")]
-        public string Server { get; set; } = "github.com";
+        public string Server { get; set; } = string.Empty;
         
         [Verb("create", HelpText = "Creates a new Release")]
         public class Create : GithubCommands
