@@ -10,19 +10,20 @@ namespace gitRelease.Types
 {
     public class GithubApi
     {
-
         private readonly GitHubClient _client;
         private readonly string _owner;
         private readonly string _repo;
+        private readonly bool _verbose = false;
 
-        public GithubApi(string Token, string owner, string repo, string sever)
+        public GithubApi(string Token, string owner, string repo, string sever, bool verbose)
         {
             var uri = new Uri($"https://api.{sever}/");
             _client = new GitHubClient(new ProductHeaderValue("gitrelease"), uri);
             var tokenAuth = new Credentials(Token);
             _client.Credentials = tokenAuth;
-            this._owner = owner;
-            this._repo = repo;
+            _owner = owner;
+            _repo = repo;
+            _verbose = verbose;
         }
 
 
@@ -38,28 +39,32 @@ namespace gitRelease.Types
                 latest.Name);
         }
 
-        public void CreateRelease(string TagName, string Body, string Name = null, bool Prerelease = false, bool Draftrelease = false)
+        public void CreateRelease(string TagName, string Body, string Name = null, bool Prerelease = false,
+            bool Draftrelease = false)
         {
             try
             {
                 var newRelease = new NewRelease(TagName);
                 newRelease.Name = Name == null ? TagName : Name;
-                newRelease.Body = Body.Replace("\\n", Environment.NewLine); ;
+                newRelease.Body = Body.Replace("\\n", Environment.NewLine);
+                ;
                 newRelease.Prerelease = Prerelease;
                 newRelease.Draft = Draftrelease;
 
                 var result = _client.Repository.Release.Create(_owner, _repo, newRelease);
                 result.Wait();
             }
-            catch
+            catch (Exception e)
             {
+                if (_verbose)
+                    Console.WriteLine(e.Message);
                 Console.WriteLine("Error creating Release");
                 Environment.Exit(-1);
             }
-
         }
 
-        public void UpdateRelease(string TagName, string Body, string Name = null, bool Prerelease = false, bool Draftrelease = false)
+        public void UpdateRelease(string TagName, string Body, string Name = null, bool Prerelease = false,
+            bool Draftrelease = false)
         {
             try
             {
@@ -75,12 +80,13 @@ namespace gitRelease.Types
                 var result = _client.Repository.Release.Edit(_owner, _repo, release.Result.Id, updateRelease);
                 result.Wait();
             }
-            catch
+            catch (Exception e)
             {
+                if (_verbose)
+                    Console.WriteLine(e.Message);
                 Console.WriteLine("Error updating Release");
                 Environment.Exit(-1);
             }
-
         }
 
 
@@ -90,28 +96,27 @@ namespace gitRelease.Types
             {
                 var release = _client.Repository.Release.Get(_owner, _repo, TagName);
                 release.Wait();
-
-
+                
                 if (Body == null)
                     Body = release.Result.Body;
-
-
+                
                 Body += lines == null ? "" : lines;
 
                 var updateRelease = release.Result.ToUpdate();
-                updateRelease.Body = Body.Replace("\\n", Environment.NewLine); ;
+                updateRelease.Body = Body.Replace("\\n", Environment.NewLine);
+                ;
 
                 var result = _client.Repository.Release.Edit(_owner, _repo, release.Result.Id, updateRelease);
                 result.Wait();
             }
-            catch
+            catch (Exception e)
             {
+                if (_verbose)
+                    Console.WriteLine(e.Message);
                 Console.WriteLine("Error Updating Body");
                 Environment.Exit(-1);
             }
         }
-
-
 
 
         public void UploadAsset(string TagName, string FileName)
@@ -121,7 +126,11 @@ namespace gitRelease.Types
                 using (var archiveContents = File.OpenRead(FileName))
                 {
                     var file = Path.GetFileName(FileName);
-                    if (file == null || file == "") { file = FileName; };
+                    if (file == null || file == "")
+                    {
+                        file = FileName;
+                    }
+                    
                     var assetUpload = new ReleaseAssetUpload()
                     {
                         FileName = file,
@@ -134,8 +143,10 @@ namespace gitRelease.Types
                     asset.Wait();
                 }
             }
-            catch 
+            catch (Exception e)
             {
+                if (_verbose)
+                    Console.WriteLine(e.Message);
                 Console.WriteLine("Error uploading Asset");
                 Environment.Exit(-1);
             }
@@ -150,6 +161,5 @@ namespace gitRelease.Types
 
             return release1;
         }
-
     }
 }

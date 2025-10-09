@@ -33,7 +33,7 @@ namespace gitRelease.Commands
 
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo, Server);
+                var github = new GithubApi(Token, Owner, Repo, Server, Verbose);
 
                 github.CreateRelease(Tag, Body, Name, Prerelease, DraftRelease);
             }
@@ -57,7 +57,7 @@ namespace gitRelease.Commands
 
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo, Server);
+                var github = new GithubApi(Token, Owner, Repo, Server, Verbose);
 
                 github.UpdateRelease(Tag, Body, Name, Prerelease, DraftRelease);
             }
@@ -75,7 +75,7 @@ namespace gitRelease.Commands
 
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo, Server);
+                var github = new GithubApi(Token, Owner, Repo, Server, Verbose);
 
                 github.UpdateReleaseBody(Tag, Lines, Body);
             }
@@ -92,7 +92,7 @@ namespace gitRelease.Commands
             public override void Execute()
             {
 
-                var github = new GithubApi(Token, Owner, Repo, Server);
+                var github = new GithubApi(Token, Owner, Repo, Server, Verbose);
 
                 github.UploadAsset(Tag, FileName);
             }
@@ -104,7 +104,7 @@ namespace gitRelease.Commands
 
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo, Server);
+                var github = new GithubApi(Token, Owner, Repo, Server, Verbose);
 
 
                 Release release = github.GetRelease(Tag); ;
@@ -118,7 +118,7 @@ namespace gitRelease.Commands
         {
             public override void Execute()
             {
-                var github = new GithubApi(Token, Owner, Repo, Server);
+                var github = new GithubApi(Token, Owner, Repo, Server, Verbose);
                 Release release = github.GetRelease(Tag); ;
                 Console.WriteLine(release.Prerelease ? "1" : "0");
             }

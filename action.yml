@@ -123,7 +123,10 @@ runs:
           CMD="$CMD --label '${{ inputs.label }}'"
         fi
 
-        CMD="$CMD -v"
+        # Add verbose flag if GitHub Actions step debug is enabled
+        if [ "${{ runner.debug }}" = "1" ] || [ "$ACTIONS_STEP_DEBUG" = "true" ]; then
+          CMD="$CMD -v"
+        fi
         
         # Execute command
         echo "Executing: $CMD"
