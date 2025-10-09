@@ -24,6 +24,13 @@ namespace gitRelease.Types
             _owner = owner;
             _repo = repo;
             _verbose = verbose;
+
+            if (verbose)
+            {
+                Console.WriteLine($"Owner: {_owner}");
+                Console.WriteLine($"Repo: {_repo}");
+                Console.WriteLine($"Server: {sever}");
+            }
         }
 
 
@@ -57,7 +64,11 @@ namespace gitRelease.Types
             catch (Exception e)
             {
                 if (_verbose)
-                    Console.WriteLine(e.Message);
+                {
+                    Console.WriteLine(e);
+                    if (e.InnerException != null)
+                        Console.WriteLine(e.InnerException);
+                }
                 Console.WriteLine("Error creating Release");
                 Environment.Exit(-1);
             }
@@ -83,7 +94,11 @@ namespace gitRelease.Types
             catch (Exception e)
             {
                 if (_verbose)
-                    Console.WriteLine(e.Message);
+                {
+                    Console.WriteLine(e);
+                    if (e.InnerException != null)
+                        Console.WriteLine(e.InnerException);
+                }
                 Console.WriteLine("Error updating Release");
                 Environment.Exit(-1);
             }
@@ -112,7 +127,11 @@ namespace gitRelease.Types
             catch (Exception e)
             {
                 if (_verbose)
-                    Console.WriteLine(e.Message);
+                {
+                    Console.WriteLine(e);
+                    if (e.InnerException != null)
+                        Console.WriteLine(e.InnerException);
+                }
                 Console.WriteLine("Error Updating Body");
                 Environment.Exit(-1);
             }
@@ -146,7 +165,11 @@ namespace gitRelease.Types
             catch (Exception e)
             {
                 if (_verbose)
-                    Console.WriteLine(e.Message);
+                {
+                    Console.WriteLine(e);
+                    if (e.InnerException != null)
+                        Console.WriteLine(e.InnerException);
+                }
                 Console.WriteLine("Error uploading Asset");
                 Environment.Exit(-1);
             }
