@@ -8,7 +8,6 @@ using System.Text.RegularExpressions;
 
 namespace gitRelease.Commands
 {
-
     [Verb("version", HelpText = "Handel's semantic versioning.")]
     [ChildVerbs(typeof(Next), typeof(Generate), typeof(GenerateNotes))]
     public class VersionCommands : BaseCommand
@@ -26,6 +25,7 @@ namespace gitRelease.Commands
                     Console.WriteLine($"{b.FriendlyName}");
                 }
             }
+
             var currentBranch = repo.Head;
 
             foreach (Tag t in repo.Tags)
@@ -44,7 +44,6 @@ namespace gitRelease.Commands
 
         public override void Execute()
         {
-
         }
 
         [Option('r', "Remote", HelpText = "Name of the remote")]
@@ -114,7 +113,6 @@ namespace gitRelease.Commands
                 }
 
 
-
                 var current = repo.Commits.ElementAt(0);
                 var previous = repo.Commits.ElementAt(1);
 
@@ -134,7 +132,9 @@ namespace gitRelease.Commands
                 }
                 else if (IsPatch(current.MessageShort) || !Explicit)
                 {
-                    repo.ApplyTag(versions.getNextPatch().ToString(), current.Sha);
+                    var next = versions.getNextPatch();
+                    if (next != null)
+                        repo.ApplyTag(versions.getNextPatch().ToString(), current.Sha);
                 }
                 else
                 {
@@ -159,6 +159,7 @@ namespace gitRelease.Commands
                 {
                     changelog += $"- {commit.Message} {Environment.NewLine}";
                 }
+
                 Console.WriteLine(changelog);
             }
         }
