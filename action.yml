@@ -133,3 +133,4 @@ runs:
         # Use docker with mounted workspace
         echo "Executing: gitRelease $ARGS"
         /root/.dotnet/tools/gitRelease $ARGS
+        echo "Executed: gitRelease $ARGS"
