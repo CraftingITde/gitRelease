@@ -61,74 +61,75 @@ runs:
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
       run: |
-        # Build command
-        CMD="docker run --rm \
-          -e GITHUB_TOKEN=${{ inputs.token }} \
-          -v ${{ github.workspace }}:/workspace \
-          -w /workspace \
-          craftingit/gitrelease:2 \
-          ${{ inputs.command }}"
+        # Build command with proper escaping
+        ARGS="${{ inputs.command }}"
         
         # Add Token
         if [ -n "${{ inputs.token }}" ]; then
-          CMD="$CMD --ApiToken '${{ inputs.token }}'"
+          ARGS="$ARGS --ApiToken '${{ inputs.token }}'"
         fi
 
         # Add server
         if [ -n "${{ inputs.server }}" ]; then
-          CMD="$CMD --server '${{ inputs.server }}'"
+          ARGS="$ARGS --server '${{ inputs.server }}'"
         fi
 
         # Add owner
         if [ -n "${{ inputs.owner }}" ]; then
-          CMD="$CMD --owner '${{ inputs.owner }}'"
+          ARGS="$ARGS --owner '${{ inputs.owner }}'"
         fi
         
         # Add repo
         if [ -n "${{ inputs.repo }}" ]; then
-          CMD="$CMD --repo '${{ inputs.repo }}'"
+          ARGS="$ARGS --repo '${{ inputs.repo }}'"
         fi
         
         # Add tag
         if [ -n "${{ inputs.tag }}" ]; then
-          CMD="$CMD --tag '${{ inputs.tag }}'"
+          ARGS="$ARGS --tag '${{ inputs.tag }}'"
         fi
         
         # Add name
         if [ -n "${{ inputs.name }}" ]; then
-          CMD="$CMD --name '${{ inputs.name }}'"
+          ARGS="$ARGS --name '${{ inputs.name }}'"
         fi
         
         # Add body
         if [ -n "${{ inputs.body }}" ]; then
-          CMD="$CMD --body '${{ inputs.body }}'"
+          ARGS="$ARGS --body '${{ inputs.body }}'"
         fi
         
         # Add prerelease flag
         if [ "${{ inputs.prerelease }}" = "true" ]; then
-          CMD="$CMD --prerelease"
+          ARGS="$ARGS --prerelease"
         fi
         
         # Add draft flag
         if [ "${{ inputs.draft }}" = "true" ]; then
-          CMD="$CMD --draft"
+          ARGS="$ARGS --draft"
         fi
         
         # Add file
         if [ -n "${{ inputs.file }}" ]; then
-          CMD="$CMD --filename '${{ inputs.file }}'"
+          ARGS="$ARGS --filename '${{ inputs.file }}'"
         fi
         
         # Add label
         if [ -n "${{ inputs.label }}" ]; then
-          CMD="$CMD --label '${{ inputs.label }}'"
+          ARGS="$ARGS --label '${{ inputs.label }}'"
         fi
 
         # Add verbose flag if GitHub Actions step debug is enabled
         if [ "${{ runner.debug }}" = "1" ] || [ "$ACTIONS_STEP_DEBUG" = "true" ]; then
-          CMD="$CMD -v"
+          ARGS="$ARGS -v"
         fi
         
-        # Execute command
-        echo "Executing: $CMD"
-        eval $CMD
+        # Execute command directly in the checked-out repository
+        # Use docker with mounted workspace
+        echo "Executing: docker run --rm -e GITHUB_TOKEN -v \"\${PWD}\":/workspace -w /workspace craftingit/gitrelease:2 $ARGS"
+        docker run --rm \
+          -e GITHUB_TOKEN="${{ inputs.token }}" \
+          -v "${PWD}":/workspace \
+          -w /workspace \
+          craftingit/gitrelease:2 \
+          $ARGS
