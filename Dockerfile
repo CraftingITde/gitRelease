@@ -19,4 +19,4 @@ COPY --from=build-env /app/out /app
 COPY gitRelease.sh /usr/bin/gitRelease 
 RUN chmod +x /usr/bin/gitRelease 
 
-ENTRYPOINT ["dotnet", "/app/gitRelease.dll"]
+ENTRYPOINT ["gitRelease"]
