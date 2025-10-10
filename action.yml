@@ -55,8 +55,13 @@ outputs:
 runs:
   using: 'composite'
   steps:
-    - name: Execute gitRelease
-      id: gitrelease
+    - uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '9.0'
+    - name: Install gitRelease
+      run: dotnet tool install --global gitRelease 
+      
+    - name: Execute gitRelease Command
       shell: bash
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
@@ -126,12 +131,5 @@ runs:
         
         # Execute command directly in the checked-out repository
         # Use docker with mounted workspace
-        echo "Executing: docker run --rm -e GITHUB_TOKEN -v ${{ github.workspace }}:/workspace craftingit/gitrelease:2 $ARGS"
-        ls -la
-        whoami
-        docker run --rm \
-          -e GITHUB_TOKEN="${{ inputs.token }}" \
-          -v "/:/workspace" \
-          -v /var/run/docker.sock:/var/run/docker.sock \
-          craftingit/gitrelease:2.0.18 \
-          $ARGS
+        echo "Executing: gitRelease $ARGS"
+        gitRelease $ARGS
