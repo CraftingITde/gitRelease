@@ -9,7 +9,13 @@ namespace gitRelease
     {
         static void Main(string[] args)
         {
-            var parser = new Parser(config => config.IgnoreUnknownArguments = true);
+            var parser = new Parser(config =>
+            {
+                config.IgnoreUnknownArguments = true;
+                config.AutoHelp = true;
+                config.AutoVersion = true;
+                config.HelpWriter = Console.Out;
+            });
             parser.ParseVerbs<GithubCommands, GiteaCommands, VersionCommands>(args)
                 .WithParsed<BaseCommand>(opts => opts.Execute());
         }
