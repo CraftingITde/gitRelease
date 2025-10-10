@@ -132,5 +132,5 @@ runs:
         docker run --rm \
           -e GITHUB_TOKEN="${{ inputs.token }}" \
           -v "${{ github.workspace }}:/workspace" \
-          craftingit/gitrelease:2.0.17 \
+          craftingit/gitrelease:2.0.18 \
           $ARGS
