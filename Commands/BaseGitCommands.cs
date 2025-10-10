@@ -13,7 +13,6 @@ namespace gitRelease.Commands
         [Option('a', "ApiToken", Required = true, HelpText = "The the API Token")]
         public string Token { get; set; }
 
-
         [Option('o', "owner", Required = true, HelpText = "The reposetory Owner")]
         public string Owner { get; set; }
 

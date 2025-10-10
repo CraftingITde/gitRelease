@@ -12,6 +12,14 @@ namespace gitRelease.Commands
     [ChildVerbs(typeof(Next), typeof(Generate), typeof(GenerateNotes))]
     public class VersionCommands : BaseCommand
     {
+        [Option('a', "ApiToken", Required = false, HelpText = "Not Needed")]
+        public string Token { get; set; }
+
+        [Option('o', "owner", Required = false, HelpText = "Not Needed")]
+        public string Owner { get; set; }
+
+        [Option('r', "repo", Required = false, HelpText = "Not Needed")]
+        public string Repo { get; set; }
         protected Versions GetVersions(Repository repo)
         {
             var currentBranchName = repo.Head.FriendlyName;
