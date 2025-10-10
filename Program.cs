@@ -9,10 +9,9 @@ namespace gitRelease
     {
         static void Main(string[] args)
         {
-
-            Parser.Default.ParseVerbs<GithubCommands, GiteaCommands, VersionCommands>(args)
+            var parser = new Parser(config => config.IgnoreUnknownArguments = true);
+            parser.ParseVerbs<GithubCommands, GiteaCommands, VersionCommands>(args)
                 .WithParsed<BaseCommand>(opts => opts.Execute());
-         
         }
     }
 }
