@@ -131,7 +131,7 @@ runs:
         whoami
         docker run --rm \
           -e GITHUB_TOKEN="${{ inputs.token }}" \
-          -v "${{ github.workspace }}:/workspace" \
+          -v "/:/workspace" \
           -v /var/run/docker.sock:/var/run/docker.sock \
           craftingit/gitrelease:2.0.18 \
           $ARGS
