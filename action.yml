@@ -127,8 +127,10 @@ runs:
         # Execute command directly in the checked-out repository
         # Use docker with mounted workspace
         echo "Executing: docker run --rm -e GITHUB_TOKEN -v ${{ github.workspace }}:/workspace craftingit/gitrelease:2 $ARGS"
+        ls -la
+        whoami
         docker run --rm \
           -e GITHUB_TOKEN="${{ inputs.token }}" \
           -v ${{ github.workspace }}:/workspace \
-          craftingit/gitrelease:2.0.16 \
+          craftingit/gitrelease:2.0.17 \
           $ARGS
