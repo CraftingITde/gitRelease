@@ -1,6 +1,7 @@
 #!/bin/bash
+pwd
 cd /workspace 
 ls -la
-PWD
+pwd
 
 dotnet /app/gitRelease.dll "$@"
