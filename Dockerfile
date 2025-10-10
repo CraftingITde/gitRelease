@@ -16,7 +16,7 @@ RUN apt-get -y update &&  \
 
 COPY --from=build-env /app/out /app
 
-RUN echo -e '#!/bin/bash\ndotnet /app/gitRelease.dll "$@"' > /usr/bin/gitRelease && \
-    chmod +x /usr/bin/gitRelease 
+COPY gitRelease.sh /usr/bin/gitRelease 
+RUN chmod +x /usr/bin/gitRelease 
 
 ENTRYPOINT ["dotnet", "/app/gitRelease.dll"]

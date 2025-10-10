@@ -132,5 +132,5 @@ runs:
           -e GITHUB_TOKEN="${{ inputs.token }}" \
           -v "${PWD}":/workspace \
           -w /workspace \
-          craftingit/gitrelease:2 \
+          craftingit/gitrelease:2.0.10 \
           $ARGS
