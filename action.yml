@@ -59,6 +59,7 @@ runs:
       with:
         dotnet-version: '9.0'
     - name: Install gitRelease
+      shell: bash
       run: dotnet tool install --global gitRelease 
       
     - name: Execute gitRelease Command
