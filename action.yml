@@ -131,7 +131,21 @@ runs:
         fi
         
         # Execute command directly in the checked-out repository
-        # Use docker with mounted workspace
+        # Prefer gitRelease from the user's dotnet tools directory and ensure it's executable
+        TOOL="$HOME/.dotnet/tools/gitRelease"
+        if [ -f "$TOOL" ] && [ ! -x "$TOOL" ]; then
+          chmod +x "$TOOL" || true
+        fi
+
+        export PATH="$PATH:$HOME/.dotnet/tools"
+
         echo "Executing: gitRelease $ARGS"
-        /root/.dotnet/tools/gitRelease $ARGS
+        if command -v gitRelease >/dev/null 2>&1; then
+          gitRelease $ARGS
+        elif [ -x "$TOOL" ]; then
+          "$TOOL" $ARGS
+        else
+          echo "gitRelease not found in PATH and $TOOL not executable" >&2
+          exit 1
+        fi
         echo "Executed: gitRelease $ARGS"
