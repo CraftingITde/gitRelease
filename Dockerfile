@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build-env
 WORKDIR /app
 
 # Alle Pakete wiederherstellen
@@ -7,7 +7,7 @@ COPY . ./
 # Jetzt Bauen
 RUN dotnet publish gitRelease.csproj -c Release -o out
 # Und Final
-FROM mcr.microsoft.com/dotnet/runtime:9.0
+FROM mcr.microsoft.com/dotnet/runtime:10.0
 
 RUN apt-get -y update &&  \ 
     apt-get install --no-install-recommends  \
